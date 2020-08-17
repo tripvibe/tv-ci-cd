@@ -1,0 +1,56 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: maven-test-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+    - name: maven-settings
+  tasks:
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: https://github.com/eformat/tv-data-lake.git
+        - name: subdirectory
+          value: ""
+        - name: deleteExisting
+          value: "true"
+
+    - name: maven-run
+      taskRef:
+        name: maven
+      params:
+        - name: MAVEN_MIRROR_URL
+          value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
+        - name: MAVEN_OPTS
+          value: "-DskipTests"
+        - name: GOALS
+          value:
+            - "package"
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: maven-settings
+          workspace: maven-settings
+        - name: output
+          workspace: shared-workspace
+
+    - name: oc-start-build
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "oc start-build $1 --from-dir=. --follow"
+        - name: ARGS
+          value:
+            - "tv-data-lake"
+      runAfter:
+        - maven-run

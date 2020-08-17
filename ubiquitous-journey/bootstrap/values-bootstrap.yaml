@@ -1,0 +1,81 @@
+# override the `blah` or `` or `` to configure your
+# desired namespace. eg `my-dev` etc
+# removing the anchor tag will also break things 🏌️‍♂️
+# overriding `ci_cd_namespace` directly using helm will not work 🤥
+
+bootstrap-project:
+  enabled: true
+  ci_cd_namespace: &ci_cd "labs-ci-cd"
+  dev_namespace: &dev "labs-dev"
+  test_namespace: &test "labs-test"
+  staging_namespace: &stage "labs-staging"
+  bindings: &binds
+      # this labs-devs is the GROUP NAME in IDM
+    - name: labs-devs
+      kind: Group
+      role: edit
+    # this labs-admins is the GROUP NAME in IDM
+    - name: labs-admins
+      kind: Group
+      role: admin
+    - name: jenkins
+      kind: ServiceAccount
+      role: admin
+      namespace: *ci_cd
+
+  namespaces:
+  - name: *ci_cd
+    bindings:
+      *binds
+  - name: *dev
+    bindings:
+      *binds
+  - name: *test
+    bindings:
+      *binds
+  - name: *stage
+    bindings:
+      *binds
+
+  serviceaccounts:
+  - name: jenkins
+    namespace: *ci_cd
+
+argocd-operator:
+  enabled: true
+  name: argocd
+  namespace: *ci_cd
+  instancelabel: rht-labs.com/uj
+  
+  # operator manages upgrades etc
+  version: v1.6.2
+  operator:
+    version: argocd-operator.v0.0.12
+    channel: alpha
+    name: argocd-operator
+
+  metrics:
+    enabled: true
+    prometheus:
+      version: prometheusoperator.0.37.0
+
+  # argocd rbac only in listed namespaces
+  namespaceRoleBinding:
+    enabled: false
+    namespaces:
+    - name: *ci_cd
+    - name: *dev
+    - name: *test
+    - name: *stage
+
+sealed-secrets:
+  # Disabled by default
+  enabled: false
+  nameOverride: sealed-secrets
+  fullnameOverride: sealed-secrets
+  # namespace must exist, so we use labs-ci-cd by default.
+  namespace: *ci_cd
+  # Dont touch the security context values, deployment will fail in OpenShift otherwise.
+  securityContext:
+    runAsUser: ""
+    fsGroup: ""

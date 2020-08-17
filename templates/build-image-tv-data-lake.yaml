@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: build-image-tv-data-lake
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: build-image-tv-data-lake-
+  spec:
+    pipelineRef:
+      name: maven-test-pipeline
+    workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: build-images
+    - name: maven-settings
+      persistentVolumeClaim:
+        claimName: maven-source
