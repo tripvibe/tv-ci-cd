@@ -41,3 +41,6 @@ Session.vim
 
 .history
 secrets.yaml
+
+# FIXME
+secrets/argocd-env-secret.yaml
