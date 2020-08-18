@@ -4,7 +4,7 @@ kind: Kustomization
 bases:
 - persistent-volume-claims
 #- configmaps
-#- secrets
+- secrets
 - tasks
 - pipelines
 - templates

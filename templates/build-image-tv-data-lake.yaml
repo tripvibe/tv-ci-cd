@@ -17,6 +17,9 @@ objects:
     - name: maven-settings
       persistentVolumeClaim:
         claimName: maven-source
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
     params:
     - name: APPLICATION_NAME
       value: tv-data-lake

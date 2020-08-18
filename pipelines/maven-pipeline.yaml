@@ -6,6 +6,7 @@ spec:
   workspaces:
     - name: shared-workspace
     - name: maven-settings
+    - name: github-secret
   params:
   - name: APPLICATION_NAME
     type: string
@@ -146,3 +147,17 @@ spec:
           value: "$(params.BUILD_NAMESPACE)"
       runAfter:
         - oc-tag-image
+
+    - name: argocd-sync-application
+      taskRef:
+        name: argocd-sync-and-wait
+      runAfter:
+      - push-ops-test
+      workspaces:
+      - name: argocd-env-secret
+        workspace: argocd-env-secret
+      params:
+      - name: application-name
+        value: "$(params.APPLICATION_NAME)"
+      - name: flags
+        value: --insecure
