@@ -128,16 +128,15 @@ spec:
         - oc-start-build
 
     - name: helm-argocd-app
-      taskRef: helm-upgrade-from-source
-      params:
-      - name: charts_dir
-        value: applications/deployment
-      - name: releases_version
-        value: v0.0.1
-      - name: release_name
-        value: my
-#      - name: overwrite_values
-#        value: "autoscaling.enabled=true,autoscaling.maxReplicas=3"
+      taskRef:
+        name: helm-upgrade-from-source
       workspaces:
-      - name: source
-        workspace: shared-workspace
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: charts_dir
+          value: applications/deployment
+        - name: releases_version
+          value: v0.0.1
+        - name: release_name
+          value: my

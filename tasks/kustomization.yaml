@@ -5,3 +5,5 @@ resources:
 - git-clone.yaml
 - maven.yaml
 - openshift-client.yaml
+- openshift-kustomize.yaml
+- helm-upgrade-from-source.yaml
