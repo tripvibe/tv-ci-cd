@@ -6,7 +6,7 @@ spec:
   workspaces:
     - name: shared-workspace
     - name: maven-settings
-    - name: github-secret
+    - name: argocd-env-secret
   params:
   - name: APPLICATION_NAME
     type: string
