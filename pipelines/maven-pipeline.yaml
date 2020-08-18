@@ -151,8 +151,6 @@ spec:
     - name: argocd-sync-application
       taskRef:
         name: argocd-sync-and-wait
-      runAfter:
-      - push-ops-test
       workspaces:
       - name: argocd-env-secret
         workspace: argocd-env-secret
@@ -161,3 +159,7 @@ spec:
         value: "$(params.APPLICATION_NAME)"
       - name: flags
         value: --insecure
+      - name: revision
+        value: "$(params.GIT_REVISION)"
+      runAfter:
+      - helm-argocd-apps
