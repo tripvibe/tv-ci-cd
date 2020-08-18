@@ -23,20 +23,13 @@ spec:
     type: string
     default: argocd-server
   steps:
-    - name: login
-      image: argoproj/argocd:$(params.argocd-version)
-      command: ["/bin/bash", "-c"]
-      args:
-        - if [ -z $ARGOCD_AUTH_TOKEN ]; then
-            yes | argocd login $(params.argocd-server) --auth-token $(cat $(workspaces.argocd-env-secret.path)/ARGOCD_TOKEN);
-          fi
     - name: sync
       image: argoproj/argocd:$(params.argocd-version)
       command: ["/bin/bash", "-c"]
       args:
-        - argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags)
+        - argocd app sync $(params.application-name) --server $(params.argocd-server) --revision $(params.revision) $(params.flags) --auth-token $(cat $(workspaces.argocd-env-secret.path)/ARGOCD_TOKEN)
     - name: wait
       image: argoproj/argocd:$(params.argocd-version)
       command: ["/bin/bash", "-c"]
       args:
-        - argocd app wait $(params.application-name) --health $(params.flags)
+        - argocd app wait $(params.application-name) --server $(params.argocd-server) --health $(params.flags) --auth-token $(cat $(workspaces.argocd-env-secret.path)/ARGOCD_TOKEN)
