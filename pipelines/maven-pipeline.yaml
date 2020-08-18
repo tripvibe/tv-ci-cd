@@ -1,11 +1,30 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: maven-test-pipeline
+  name: maven-pipeline
 spec:
   workspaces:
     - name: shared-workspace
     - name: maven-settings
+  params:
+  - name: APPLICATION_NAME
+    type: string
+    default: ""
+  - name: GIT_URL
+    type: string
+    default: ""
+  - name: GIT_DIR
+    type: string
+    default: ""
+  - name: GIT_REVISION
+    type: string
+    default: "master"
+  - name: MAVEN_MIRROR_URL
+    type: string
+    default: "http://repo1.maven.org/maven2"
+  - name: MAVEN_OPTS
+    type: string
+    default: ""
   tasks:
     - name: fetch-repository
       taskRef:
@@ -15,9 +34,9 @@ spec:
           workspace: shared-workspace
       params:
         - name: url
-          value: https://github.com/eformat/tv-data-lake.git
+          value: "$(params.GIT_URL)"
         - name: subdirectory
-          value: ""
+          value: "$(params.GIT_DIR)"
         - name: deleteExisting
           value: "true"
 
@@ -26,9 +45,9 @@ spec:
         name: maven
       params:
         - name: MAVEN_MIRROR_URL
-          value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
+          value: "$(params.MAVEN_MIRROR_URL)"
         - name: MAVEN_OPTS
-          value: "-DskipTests"
+          value: "$(params.MAVEN_OPTS)"
         - name: GOALS
           value:
             - "package"
@@ -51,6 +70,6 @@ spec:
           value: "oc start-build $1 --from-dir=. --follow"
         - name: ARGS
           value:
-            - "tv-data-lake"
+            - "$(params.APPLICATION_NAME)"
       runAfter:
         - maven-run
