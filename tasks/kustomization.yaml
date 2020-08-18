@@ -7,3 +7,4 @@ resources:
 - openshift-client.yaml
 - openshift-kustomize.yaml
 - helm-template-from-source.yaml
+- argocd-sync-and-wait.yaml
