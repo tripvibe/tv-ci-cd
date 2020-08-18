@@ -1,23 +1,21 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: helm-upgrade-from-source
+  name: helm-template-from-source
   labels:
     app.kubernetes.io/version: "0.1"
   annotations:
     tekton.dev/pipelines.minVersion: "0.12.1"
     tekton.dev/tags: helm
+    tekton.dev/displayName: "helm"
 spec:
   description: >-
-    These tasks will install / upgrade a helm chart into your Kubernetes /
+    These tasks will call helm template on a chart into your Kubernetes /
     OpenShift Cluster using Helm
 
   params:
     - name: charts_dir
       description: The directory in source that contains the helm chart
-    - name: release_version
-      description: The helm release version in semantic versioning format
-      default: "v1.0.0"
     - name: release_name
       description: The helm release name
       default: "helm-release"
@@ -30,15 +28,18 @@ spec:
     - name: helm_version
       description: "Specify a specific helm version"
       default: "latest"
+    - name: target_namespace
+      description: "Specify a target namespace"
+      default: ""
   workspaces:
     - name: source
   steps:
-    - name: upgrade
-      image: lachlanevenson/k8s-helm:$(inputs.params.helm_version)
+    - name: template
+      image: quay.io/eformat/openshift-helm:$(inputs.params.helm_version)
       workingDir: /workspace/source
       script: |
         echo current installed helm releases
         helm list --namespace "$(inputs.params.release_namespace)"
 
         echo installing helm chart...
-        helm upgrade --install --wait --namespace "$(inputs.params.release_namespace)" --version $(inputs.params.release_version) $(inputs.params.release_name) $(inputs.params.charts_dir) --debug --set "$(inputs.params.overwrite_values)"
+        helm template $(inputs.params.release_name) $(inputs.params.charts_dir) | oc apply -n $(inputs.params.target_namespace) -f-

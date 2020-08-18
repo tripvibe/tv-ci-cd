@@ -6,4 +6,4 @@ resources:
 - maven.yaml
 - openshift-client.yaml
 - openshift-kustomize.yaml
-- helm-upgrade-from-source.yaml
+- helm-template-from-source.yaml

@@ -56,9 +56,11 @@ spec:
         - name: url
           value: "https://github.com/eformat/tv-ci-cd.git"
         - name: subdirectory
-          value: "applications"
+          value: "cicd"
         - name: deleteExisting
           value: "true"
+      runAfter:
+        - fetch-app-repository
 
     - name: maven-run
       taskRef:
@@ -72,7 +74,7 @@ spec:
           value:
             - "package"
       runAfter:
-        - fetch-app-repository
+        - fetch-cicd-repository
       workspaces:
         - name: maven-settings
           workspace: maven-settings
@@ -90,7 +92,7 @@ spec:
           value: "kustomize build $1 | oc apply -n $2 -f-"
         - name: ARGS
           value:
-            - "applications"
+            - "cicd/applications"
             - "$(params.BUILD_NAMESPACE)"
       runAfter:
         - maven-run
@@ -127,16 +129,18 @@ spec:
       runAfter:
         - oc-start-build
 
-    - name: helm-argocd-app
+    - name: helm-argocd-apps
       taskRef:
-        name: helm-upgrade-from-source
+        name: helm-template-from-source
       workspaces:
         - name: source
           workspace: shared-workspace
       params:
         - name: charts_dir
-          value: applications/deployment
-        - name: releases_version
-          value: v0.0.1
+          value: cicd/applications/deployment
         - name: release_name
           value: my
+        - name: target_namespace
+          value: "$(params.BUILD_NAMESPACE)"
+      runAfter:
+        - oc-tag-image

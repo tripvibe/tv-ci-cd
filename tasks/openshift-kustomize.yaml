@@ -39,7 +39,7 @@ spec:
         type: git
         optional: true
   steps:
-    - name: oc
+    - name: kustomize
       workingDir: $(workspaces.output.path)
       image: quay.io/eformat/openshift-kustomize:latest
       script: "$(params.SCRIPT)"
