@@ -15,7 +15,7 @@ Deploy UJ apps
 helm template -f ubiquitous-journey/values-tooling.yaml ubiquitous-journey/ | oc apply -n labs-ci-cd -f-
 ```
 
-Deploy tripvibe Tekton resources
+Deploy tripvibe Tekton resources (this will move to its own seed pipeline)
 ```bash
 cd ../
 kustomize build | oc apply -f-
