@@ -16,6 +16,9 @@ spec:
   params:
     - name: charts_dir
       description: The directory in source that contains the helm chart
+    - name: values_file
+      description: The file in the charts dir containing values
+      default: "values.yaml"
     - name: release_name
       description: The helm release name
       default: "helm-release"
@@ -42,4 +45,4 @@ spec:
         helm list --namespace "$(inputs.params.release_namespace)"
 
         echo installing helm chart...
-        helm template $(inputs.params.release_name) $(inputs.params.charts_dir) | oc apply -n $(inputs.params.target_namespace) -f-
+        helm template $(inputs.params.release_name) -f $(inputs.params.values_file) $(inputs.params.charts_dir) | oc apply -n $(inputs.params.target_namespace) -f-
