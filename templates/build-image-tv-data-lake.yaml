@@ -23,8 +23,10 @@ objects:
     - name: GIT_URL
       value: https://github.com/eformat/tv-data-lake.git
     - name: GIT_REVISION
-      value: master
+      value: master # fixme versioning
     - name: MAVEN_MIRROR_URL
       value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
     - name: MAVEN_OPTS
-      value: "-DskipTests" # tdd,no:)
+      value: "-DskipTests" # fixme run tests
+    - name: TAREGT_NAMESPACE
+      value: "labs-dev" # fixme deploy to multiple-ns

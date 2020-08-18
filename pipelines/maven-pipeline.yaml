@@ -25,8 +25,14 @@ spec:
   - name: MAVEN_OPTS
     type: string
     default: ""
+  - name: BUILD_NAMESPACE
+    type: string
+    default: "labs-ci-cd"
+  - name: TARGET_NAMESPACE
+    type: string
+    default: "labs-dev"
   tasks:
-    - name: fetch-repository
+    - name: fetch-app-repository
       taskRef:
         name: git-clone
       workspaces:
@@ -37,6 +43,20 @@ spec:
           value: "$(params.GIT_URL)"
         - name: subdirectory
           value: "$(params.GIT_DIR)"
+        - name: deleteExisting
+          value: "true"
+
+    - name: fetch-cicd-repository
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: "https://github.com/eformat/tv-ci-cd.git"
+        - name: subdirectory
+          value: "applications"
         - name: deleteExisting
           value: "true"
 
@@ -52,12 +72,28 @@ spec:
           value:
             - "package"
       runAfter:
-        - fetch-repository
+        - fetch-app-repository
       workspaces:
         - name: maven-settings
           workspace: maven-settings
         - name: output
           workspace: shared-workspace
+
+    - name: kustomize-build-config
+      taskRef:
+        name: openshift-kustomize
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "kustomize build $1 | oc apply -n $2 -f-"
+        - name: ARGS
+          value:
+            - "applications"
+            - "$(params.BUILD_NAMESPACE)"
+      runAfter:
+        - maven-run
 
     - name: oc-start-build
       taskRef:
@@ -72,4 +108,36 @@ spec:
           value:
             - "$(params.APPLICATION_NAME)"
       runAfter:
-        - maven-run
+        - kustomize-build-config
+
+    - name: oc-tag-image
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "oc -n $3 tag $1:latest $2/$1:latest"
+        - name: ARGS
+          value:
+            - "$(params.APPLICATION_NAME)"
+            - "$(params.TARGET_NAMESPACE)"
+            - "$(params.BUILD_NAMESPACE)"
+      runAfter:
+        - oc-start-build
+
+    - name: helm-argocd-app
+      taskRef: helm-upgrade-from-source
+      params:
+      - name: charts_dir
+        value: applications/deployment
+      - name: releases_version
+        value: v0.0.1
+      - name: release_name
+        value: my
+#      - name: overwrite_values
+#        value: "autoscaling.enabled=true,autoscaling.maxReplicas=3"
+      workspaces:
+      - name: source
+        workspace: shared-workspace

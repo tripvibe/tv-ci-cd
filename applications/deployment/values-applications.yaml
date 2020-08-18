@@ -1,0 +1,35 @@
+# Over rides for default values in Helm Charts
+destination: &test_ns labs-dev
+##############
+# Application Custom Values
+#############
+tv_data_lake_values: &data_lake_values
+  appName: tv-data-lake
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-data-lake
+  image_namespace: *test_ns
+  image_version: latest
+##############
+# Argo Ignore Differences
+#############
+ignore_differences: &ignore_differences
+  ignoreDifferences:
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/template/spec/containers/0/image
+    - /spec/triggers/0/imageChangeParams/lastTriggeredImage
+    - /spec/triggers/1/imageChangeParams/lastTriggeredImage
+##############
+# Argo App of Apps declaration
+#############
+applications:
+- name: tv-data-lake
+  enabled: true
+  source: https://github.com/eformat/tv-data-lake.git
+  source_path: chart
+  sync_policy_automated: true
+  destination: *test_ns
+  source_ref: master
+  values: *data_lake_values
+  ignore_differences: *ignore_differences
