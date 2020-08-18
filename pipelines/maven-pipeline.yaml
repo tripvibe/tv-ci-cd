@@ -139,7 +139,7 @@ spec:
         - name: charts_dir
           value: cicd/applications/deployment
         - name: values_file
-          value: values-application.yaml
+          value: values-applications.yaml
         - name: release_name
           value: my
         - name: target_namespace
