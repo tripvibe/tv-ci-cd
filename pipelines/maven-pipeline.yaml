@@ -146,7 +146,7 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values
-          value: "applications(name==$(params.APPLICATION_NAME)).source_ref=$(params.GIT_REVISION)" # autoscaling.enabled=true,autoscaling.maxReplicas=3
+          value: "applications[0].source_ref=$(params.GIT_REVISION)" # [0] is pretty naf way to do this, perhaps do yq task first for this?
       runAfter:
         - oc-tag-image
 
