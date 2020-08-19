@@ -26,7 +26,7 @@ ignore_differences: &ignore_differences
 # Argo App of Apps declaration
 #############
 applications:
-- name: tv-data-lake
+- name: tv-data-lake-dev
   enabled: true
   source: https://github.com/eformat/tv-data-lake.git
   source_path: chart
@@ -39,7 +39,7 @@ applications:
     enabled: true
     name: tripvibe
     destinations: *allowed_destinations
-- name: tv-data-lake
+- name: tv-data-lake-test
   enabled: true
   source: https://github.com/eformat/tv-data-lake.git
   source_path: chart
