@@ -11,9 +11,6 @@ spec:
   - name: APPLICATION_NAME
     type: string
     default: ""
-  - name: APPLICATION_NUMBER # in values-applications.yaml, see below for helm override
-    type: string
-    default: "0"
   - name: GIT_URL
     type: string
     default: ""
@@ -32,9 +29,18 @@ spec:
   - name: BUILD_NAMESPACE
     type: string
     default: "labs-ci-cd"
-  - name: TARGET_NAMESPACE
+  - name: DEV_NAMESPACE
     type: string
     default: "labs-dev"
+  - name: TEST_NAMESPACE
+    type: string
+    default: "labs-test"
+  - name: APPLICATION_NUMBER_DEV # in values-applications.yaml, see below for helm override
+    type: string
+    default: "0"
+  - name: APPLICATION_NUMBER_TEST # in values-applications.yaml, see below for helm override
+    type: string
+    default: "1"
   tasks:
     - name: fetch-app-repository
       taskRef:
@@ -116,7 +122,7 @@ spec:
       runAfter:
         - kustomize-build-config
 
-    - name: oc-tag-image
+    - name: oc-tag-image-dev
       taskRef:
         name: openshift-client
       workspaces:
@@ -128,7 +134,25 @@ spec:
         - name: ARGS
           value:
             - "$(params.APPLICATION_NAME)"
-            - "$(params.TARGET_NAMESPACE)"
+            - "$(params.DEV_NAMESPACE)"
+            - "$(params.BUILD_NAMESPACE)"
+            - "$(params.GIT_REVISION)"
+      runAfter:
+        - oc-start-build
+
+    - name: oc-tag-image-test
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "oc -n $3 tag $1:latest $2/$1:$4" # tag by git revision
+        - name: ARGS
+          value:
+            - "$(params.APPLICATION_NAME)"
+            - "$(params.TEST_NAMESPACE)"
             - "$(params.BUILD_NAMESPACE)"
             - "$(params.GIT_REVISION)"
       runAfter:
@@ -149,10 +173,11 @@ spec:
           value: my
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
-        - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task OR gitops and check it in first
-          value: "applications[$(params.APPLICATION_NUMBER)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER)].values.image_version=$(params.GIT_REVISION)"
+        - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task (name=) OR gitops and check it in first
+          value: "applications[$(params.APPLICATION_NUMBER_DEV)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_version=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_namespace=$(params.DEV_NAMESPACE),applications[$(params.APPLICATION_NUMBER_TEST)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_version=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_namespace=$(params.TEST_NAMESPACE)"
       runAfter:
-        - oc-tag-image
+        - oc-tag-image-dev
+        - oc-tag-image-test
 
     - name: argocd-sync-application
       taskRef:

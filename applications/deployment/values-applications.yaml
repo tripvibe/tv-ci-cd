@@ -1,5 +1,4 @@
 # Over rides for default values in Helm Charts
-destination: &test_ns labs-dev
 ##############
 # Application Custom Values
 #############
@@ -7,9 +6,7 @@ tv_data_lake_values: &data_lake_values
   appName: tv-data-lake
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: tv-data-lake
-  image_namespace: *test_ns
-  image_version: latest
-all_destinations: &all_destinations
+allowed_destinations: &allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
   - namespace: labs-test
@@ -34,11 +31,24 @@ applications:
   source: https://github.com/eformat/tv-data-lake.git
   source_path: chart
   sync_policy_automated: true
-  destination: *test_ns
-  source_ref: master
+  destination: labs-dev
+  source_ref: master # overridden by git revision in pipeline trigger
   values: *data_lake_values
   ignore_differences: *ignore_differences
   project:
     enabled: true
     name: tripvibe
-    destinations: *all_destinations
+    destinations: *allowed_destinations
+- name: tv-data-lake
+  enabled: true
+  source: https://github.com/eformat/tv-data-lake.git
+  source_path: chart
+  sync_policy_automated: true
+  destination: labs-test
+  source_ref: master # overridden by git revision in pipeline trigger
+  values: *data_lake_values
+  ignore_differences: *ignore_differences
+  project:
+    enabled: true
+    name: tripvibe
+    destinations: *allowed_destinations
