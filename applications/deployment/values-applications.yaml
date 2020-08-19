@@ -36,3 +36,5 @@ applications:
   project:
     enabled: true
     name: tripvibe
+  destinations:
+  - namespace: *test_ns
