@@ -9,6 +9,12 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   name: {{ $app.name }}
+  labels:
+{{- if contains $app.values.fullnameOverride $app.name }}
+    app.kubernetes.io/instance: {{ $app.values.fullnameOverride }}
+{{- else -}}
+    app.kubernetes.io/instance: {{ $app.name }}
+{{- end }}
 spec:
   destination:
     namespace: {{ $app.destination | default "labs-ci-cd" }}
