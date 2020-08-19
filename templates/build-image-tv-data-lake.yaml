@@ -28,6 +28,8 @@ objects:
       value: https://github.com/eformat/tv-data-lake.git
     - name: GIT_REVISION
       value: master # or git tag, revision
+    - name: GIT_REF
+      value: "refs/heads/master" # branch
     - name: MAVEN_MIRROR_URL
       value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
     - name: MAVEN_OPTS

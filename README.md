@@ -31,5 +31,6 @@ oc process build-image-tv-data-lake | oc create -f-
 - Do not use PipelineResources due to the unclear nature of their future (deprecated).
 - Instead, uses tasks, workspaces, results and persistent volume claims
 - For each component, there is a separate PVC to allow parallel component builds without two pipeline runs stepping on each others toes. In the future (post Tekton-v0.11), the PVCs can be created on the fly instead of having to be static.
+- Each source branch uses a separate output directory so we dont corrupt each other
 - The git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repos reside on the same PVC.
 - The build-and-test pipeline is designed to be generic in nature and to be used on all components.

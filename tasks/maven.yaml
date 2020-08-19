@@ -56,6 +56,9 @@ spec:
       description: Protocol for the proxy ie http or https
       type: string
       default: "http"
+    - name: WORK_DIRECTORY
+      description: Directory to start build in (handle multiple branches)
+      type: string
   steps:
     - name: mvn-settings
       image: registry.access.redhat.com/ubi8/ubi-minimal:latest
@@ -115,7 +118,7 @@ spec:
 
     - name: mvn-goals
       image: $(params.MAVEN_IMAGE)
-      workingDir: $(workspaces.output.path)
+      workingDir: $(workspaces.output.path)/$(params.WORK_DIRECTORY)
       command: ["/usr/bin/mvn", "$(params.MAVEN_OPTS)"]
       args:
         - -s

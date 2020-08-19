@@ -14,12 +14,12 @@ spec:
   - name: GIT_URL
     type: string
     default: ""
-  - name: GIT_DIR
-    type: string
-    default: ""
   - name: GIT_REVISION
     type: string
     default: "master"
+  - name: GIT_REF
+    type: string
+    default: "refs/heads/master"
   - name: MAVEN_MIRROR_URL
     type: string
     default: "http://repo1.maven.org/maven2"
@@ -51,8 +51,12 @@ spec:
       params:
         - name: url
           value: "$(params.GIT_URL)"
+        - name: revision
+          value: "$(params.GIT_REVISION)"
+        - name: refspec
+          value: "$(params.GIT_REF)"
         - name: subdirectory
-          value: "$(params.GIT_DIR)"
+          value: "$(params.APPLICATION_NAME)/$(params.GIT_REF)"
         - name: deleteExisting
           value: "true"
 
@@ -65,6 +69,8 @@ spec:
       params:
         - name: url
           value: "https://github.com/eformat/tv-ci-cd.git"
+        - name: revision
+          value: "master"
         - name: subdirectory
           value: "cicd"
         - name: deleteExisting
@@ -80,6 +86,8 @@ spec:
           value: "$(params.MAVEN_MIRROR_URL)"
         - name: MAVEN_OPTS
           value: "$(params.MAVEN_OPTS)"
+        - name: WORK_DIRECTORY
+          value: "$(params.APPLICATION_NAME)/$(params.GIT_REF)"
         - name: GOALS
           value:
             - "package"
@@ -115,7 +123,7 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "oc start-build $1 --from-dir=. --follow"
+          value: "oc start-build $1 --from-dir=$(params.APPLICATION_NAME)/$(params.GIT_REF) --follow"
         - name: ARGS
           value:
             - "$(params.APPLICATION_NAME)"

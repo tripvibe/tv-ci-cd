@@ -10,6 +10,9 @@ spec:
     - name: git-revision
       description: The git revision
       default: master
+    - name: git-ref
+      description: The git branch ref
+      default: master
     - name: git-repo-name
       description: The name of the deployment to be created / patched
   resourcetemplates:
@@ -30,6 +33,8 @@ spec:
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
             value: '$(params.git-revision)'
+          - name: GIT_REF
+            value: '$(params.git-ref)'
           - name: MAVEN_MIRROR_URL
             value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
           - name: MAVEN_OPTS
