@@ -13,7 +13,11 @@ spec:
   destination:
     namespace: {{ $app.destination | default "labs-ci-cd" }}
     server: {{ $app.cluster_api | default "https://kubernetes.default.svc" }}
-  project: {{ $app.project | default "default" }}
+{{- if $app.project.enabled }}
+  project: {{ $app.project.name }}
+{{- else -}}
+  project: default
+{{- end }}
   source:
 {{- if not $app.no_helm }}
     helm:

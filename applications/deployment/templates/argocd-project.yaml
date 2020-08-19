@@ -1,0 +1,21 @@
+{{- if .Values.applications }}
+{{- range $app := .Values.applications }}
+{{- if $app.enabled }}
+{{- if $app.project.enabled }}
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ $app.project.name }}
+  name: {{ $app.project.name }}
+spec:
+  sourceRepos:
+  - '*'
+
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

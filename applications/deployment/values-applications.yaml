@@ -33,3 +33,6 @@ applications:
   source_ref: master
   values: *data_lake_values
   ignore_differences: *ignore_differences
+  project:
+    enabled: true
+    name: tripvibe
