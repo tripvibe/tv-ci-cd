@@ -13,7 +13,7 @@ spec:
     default: ""
   - name: APPLICATION_NUMBER # in values-applications.yaml, see below for helm override
     type: string
-    default: 0
+    default: "0"
   - name: GIT_URL
     type: string
     default: ""

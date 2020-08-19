@@ -26,6 +26,8 @@ spec:
         params:
           - name: APPLICATION_NAME
             value: '$(params.git-repo-name)'
+          - name: APPLICATION_NUMBER # fixme array in values-applications
+            value: "0"
           - name: GIT_URL
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
