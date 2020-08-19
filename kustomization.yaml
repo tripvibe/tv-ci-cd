@@ -5,7 +5,8 @@ bases:
 - persistent-volume-claims
 #- configmaps
 - secrets
+- rolebindings
 - tasks
 - pipelines
 - templates
-- rolebindings
+- triggers

@@ -1,0 +1,46 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: tv-data-lake-trigger-template
+spec:
+  params:
+    - name: git-repo-url
+      description: The git repository url
+    - name: git-revision
+      description: The git revision
+      default: master
+    - name: git-repo-name
+      description: The name of the deployment to be created / patched
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: build-image-tv-data-lake-
+        labels:
+          tekton.dev/pipeline: maven-pipeline
+      spec:
+        serviceAccountName: pipeline
+        pipelineRef:
+          name: maven-pipeline
+        params:
+          - name: GIT_URL
+            value: '$(params.git-repo-url)'
+          - name: GIT_REVISION
+            value: '$(params.git-revision)'
+          - name: MAVEN_MIRROR_URL
+            value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
+          - name: MAVEN_OPTS
+            value: "-DskipTests" # fixme run tests
+          - name: TAREGT_NAMESPACE
+            value: "labs-dev" # fixme deploy to multiple-ns
+        workspaces:
+        - name: shared-workspace
+          persistentVolumeClaim:
+            claimName: build-images
+        - name: maven-settings
+          persistentVolumeClaim:
+            claimName: maven-source
+        - name: argocd-env-secret
+          secret:
+            secretName: argocd-env

@@ -3,3 +3,4 @@ kind: Kustomization
 
 bases:
 - edit-0.yaml
+- tekton-triggers-rbac.yaml
