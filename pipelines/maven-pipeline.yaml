@@ -145,6 +145,8 @@ spec:
           value: my
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
+        - name: overwrite_values
+          value: "applications(name==$(params.APPLICATION_NAME)).source_ref=$(params.GIT_REVISION)" # autoscaling.enabled=true,autoscaling.maxReplicas=3
       runAfter:
         - oc-tag-image
 
