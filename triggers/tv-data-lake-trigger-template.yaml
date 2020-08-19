@@ -24,6 +24,8 @@ spec:
         pipelineRef:
           name: maven-pipeline
         params:
+          - name: APPLICATION_NAME
+            value: '$(params.git-repo-name)'
           - name: GIT_URL
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
