@@ -187,7 +187,7 @@ spec:
         workspace: argocd-env-secret
       params:
       - name: application-name
-        value: "$(params.APPLICATION_NAME)"
+        value: "-l app.kubernetes.io/instance=$(params.APPLICATION_NAME)" # sync by label, multiple apps different namespaces
       - name: flags
         value: --insecure
       - name: revision

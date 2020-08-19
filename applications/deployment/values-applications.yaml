@@ -3,7 +3,7 @@
 # Application Custom Values
 #############
 tv_data_lake_values: &data_lake_values
-  appName: tv-data-lake
+  fullnameOverride: tv-data-lake
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: tv-data-lake
 allowed_destinations: &allowed_destinations # argocd project
