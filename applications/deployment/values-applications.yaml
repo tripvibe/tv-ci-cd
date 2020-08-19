@@ -9,6 +9,11 @@ tv_data_lake_values: &data_lake_values
   image_name: tv-data-lake
   image_namespace: *test_ns
   image_version: latest
+all_destinations: &all_destinations
+  - namespace: labs-dev
+    server: https://kubernetes.default.svc
+  - namespace: labs-test
+    server: https://kubernetes.default.svc
 ##############
 # Argo Ignore Differences
 #############
@@ -36,5 +41,4 @@ applications:
   project:
     enabled: true
     name: tripvibe
-  destinations:
-  - namespace: *test_ns
+    destinations: *all_destinations

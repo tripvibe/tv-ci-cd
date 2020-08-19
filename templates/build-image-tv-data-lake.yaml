@@ -24,6 +24,8 @@ objects:
     params:
     - name: APPLICATION_NAME
       value: tv-data-lake
+    - name: APPLICATION_NUMBER # fixme array in values-applications
+      value: 0
     - name: GIT_URL
       value: https://github.com/eformat/tv-data-lake.git
     - name: GIT_REVISION

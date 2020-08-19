@@ -14,11 +14,10 @@ metadata:
 spec:
   sourceRepos:
   - '*'
+{{- if $app.project.destinations }}
   destinations:
-  - namespace: labs-dev
-    server: https://kubernetes.default.svc
-  - namespace: labs-test
-    server: https://kubernetes.default.svc
+{{- toYaml $app.project.destinations | nindent 2 }}
+{{- end }}
 
 {{- end }}
 {{- end }}
