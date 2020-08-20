@@ -34,3 +34,4 @@ oc process build-image-tv-data-lake | oc create -f-
 - Each source branch uses a separate output directory so we dont corrupt each other
 - The git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repos reside on the same PVC.
 - The build-and-test pipeline is designed to be generic in nature and to be used on all components.
+- Integrates with Ubiquitous Journey (ArgoCD, Helm3) app-of-apps
