@@ -41,7 +41,7 @@ spec:
     path: {{ $app.source_path }}
     {{- end }}
     repoURL: {{ $app.source }}
-    targetRevision: {{ $app.source_ref | default "master" }}
+    targetRevision: {{ $app.source_ref | default "master" | quote }}
     {{- if $app.chart_name }}
     chart: {{ $app.chart_name }}
     {{- end}}
