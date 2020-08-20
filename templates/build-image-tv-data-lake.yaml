@@ -31,7 +31,7 @@ objects:
     - name: GIT_REF
       value: ""
     - name: GIT_SHORT_REVISION
-      value: ""
+      value: "master"
     - name: GIT_BRANCH
       value: ""
     - name: MAVEN_MIRROR_URL
