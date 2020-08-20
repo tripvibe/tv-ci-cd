@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - maven-pipeline.yaml
 - s3-pipeline.yaml
+- kafka-pipeline.yaml

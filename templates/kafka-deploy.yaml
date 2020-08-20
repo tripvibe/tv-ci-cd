@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: kafka-deploy
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: kafka-deploy-
+  spec:
+    pipelineRef:
+      name: kafka-pipeline
+    workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: build-images
+    params:
+    - name: APPLICATION_NAME
+      value: kafka
+    - name: GIT_URL
+      value: https://github.com/eformat/tv-streams.git
+    - name: GIT_REVISION
+      value: master # or git tag, revision
+    - name: GIT_REF
+      value: ""
+    - name: GIT_SHORT_REVISION
+      value: ""
+    - name: GIT_BRANCH
+      value: ""
+    - name: BUILD_NAMESPACE
+      value: "labs-ci-cd"
+    - name: DEV_NAMESPACE
+      value: "labs-dev"
+    - name: TEST_NAMESPACE
+      value: "labs-test"

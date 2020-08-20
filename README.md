@@ -21,9 +21,14 @@ cd ../
 kustomize build | oc apply -f-
 ```
 
-Start a pipeline build
+Start a pipeline build manually
 ```bash
 oc process build-image-tv-data-lake | oc create -f-
+```
+
+Else add json webhook in github repo pointing to this route to trigger pipeline
+```bash
+oc get route webhook -o custom-columns=ROUTE:.spec.host --no-headers
 ```
 
 ## Tekton design rationale

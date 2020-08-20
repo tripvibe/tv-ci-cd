@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: s3-pipeline
+  name: kafka-pipeline
 spec:
   workspaces:
     - name: shared-workspace
@@ -70,7 +70,7 @@ spec:
       runAfter:
         - fetch-app-repository
 
-    - name: oc-apply-minio-dev
+    - name: oc-apply-kafka-dev
       taskRef:
         name: openshift-client
       workspaces:
@@ -78,14 +78,14 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "oc -n $1 apply -f $(params.APPLICATION_NAME)/$(params.GIT_REF)/ocp/minio-ml-workshop.yaml"
+          value: "oc -n $1 apply -f $(params.APPLICATION_NAME)/$(params.GIT_REF)/ocp/kafka-deployment.yaml"
         - name: ARGS
           value:
             - "$(params.DEV_NAMESPACE)"
       runAfter:
         - fetch-cicd-repository
 
-    - name: oc-wait-minio-dev
+    - name: oc-wait-kafka-dev
       taskRef:
         name: openshift-client
       workspaces:
@@ -93,14 +93,14 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "sleep 10 && oc -n $1 wait deployment/minio-ml-workshop --for=condition=Available --timeout=300s"
+          value: "sleep 10 && oc -n $1 wait pod/tv-cluster-kafka-{0..2} --for=condition=Ready --timeout=300s"
         - name: ARGS
           value:
             - "$(params.DEV_NAMESPACE)"
       runAfter:
-        - oc-apply-minio-dev
+        - oc-apply-kafka-dev
 
-    - name: oc-apply-minio-test
+    - name: oc-apply-kafka-test
       taskRef:
         name: openshift-client
       workspaces:
@@ -108,14 +108,14 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "oc -n $1 apply -f $(params.APPLICATION_NAME)/$(params.GIT_REF)/ocp/minio-ml-workshop.yaml"
+          value: "oc -n $1 apply -f $(params.APPLICATION_NAME)/$(params.GIT_REF)/ocp/kafka-deployment.yaml"
         - name: ARGS
           value:
             - "$(params.TEST_NAMESPACE)"
       runAfter:
         - fetch-cicd-repository
 
-    - name: oc-wait-minio-test
+    - name: oc-wait-kafka-test
       taskRef:
         name: openshift-client
       workspaces:
@@ -123,9 +123,9 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "sleep 10 && oc -n $1 wait deployment/minio-ml-workshop --for=condition=Available --timeout=300s"
+          value: "sleep 10 && oc -n $1 wait pod/tv-cluster-kafka-{0..2} --for=condition=Ready --timeout=300s"
         - name: ARGS
           value:
             - "$(params.TEST_NAMESPACE)"
       runAfter:
-        - oc-apply-minio-test
+        - oc-apply-kafka-test

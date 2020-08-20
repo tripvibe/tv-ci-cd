@@ -78,7 +78,7 @@ spec:
         - name: revision
           value: "master"
         - name: subdirectory
-          value: "cicd"
+          value: "$(params.APPLICATION_NAME)/cicd"
         - name: deleteExisting
           value: "true"
       runAfter:
@@ -116,7 +116,7 @@ spec:
           value: "kustomize build $1 | oc apply -n $2 -f-"
         - name: ARGS
           value:
-            - "cicd/applications"
+            - "$(params.APPLICATION_NAME)/cicd/applications"
             - "$(params.BUILD_NAMESPACE)"
       runAfter:
         - maven-run
@@ -194,7 +194,7 @@ spec:
           workspace: shared-workspace
       params:
         - name: charts_dir
-          value: cicd/applications/deployment
+          value: "$(params.APPLICATION_NAME)/cicd/applications/deployment"
         - name: values_file
           value: values-applications.yaml
         - name: release_name
@@ -222,7 +222,7 @@ spec:
           workspace: shared-workspace
       params:
         - name: charts_dir
-          value: cicd/applications/deployment
+          value: "$(params.APPLICATION_NAME)/cicd/applications/deployment"
         - name: values_file
           value: values-applications.yaml
         - name: release_name
