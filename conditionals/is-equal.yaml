@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Condition
+metadata:
+ name: is-equal
+spec:
+ params:
+ - name: left
+   type: string
+ - name: right
+   type: string
+ check:
+   image: registry.access.redhat.com/ubi8/ubi-minimal:8.2
+   script: |
+     #!/bin/sh
+     if [ $(params.left) = $(params.right) ]; then
+       exit 0
+     else
+       exit 1
+     fi

@@ -4,6 +4,7 @@ kind: Kustomization
 bases:
 - persistent-volume-claims
 #- configmaps
+- conditionals
 - secrets
 - rolebindings
 - tasks

@@ -150,11 +150,18 @@ spec:
             - "$(params.APPLICATION_NAME)"
             - "$(params.DEV_NAMESPACE)"
             - "$(params.BUILD_NAMESPACE)"
-            - "$(params.GIT_REVISION)"
+            - "$(params.GIT_SHORT_REVISION)"
       runAfter:
         - oc-start-build
 
     - name: oc-tag-image-test
+      conditions:
+      - conditionRef: is-equal
+        params:
+          - name: left
+            value: "master"
+          - name: right
+            value: "$(params.GIT_BRANCH)"
       taskRef:
         name: openshift-client
       workspaces:
@@ -168,11 +175,18 @@ spec:
             - "$(params.APPLICATION_NAME)"
             - "$(params.TEST_NAMESPACE)"
             - "$(params.BUILD_NAMESPACE)"
-            - "$(params.GIT_REVISION)"
+            - "$(params.GIT_SHORT_REVISION)"
       runAfter:
         - oc-start-build
 
-    - name: helm-argocd-apps
+    - name: helm-argocd-apps-master # deploy to dev + test
+      conditions:
+      - conditionRef: is-equal
+        params:
+          - name: left
+            value: "master"
+          - name: right
+            value: "$(params.GIT_BRANCH)"
       taskRef:
         name: helm-template-from-source
       workspaces:
@@ -188,10 +202,37 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task (name=) OR gitops and check it in first
-          value: "applications[$(params.APPLICATION_NUMBER_DEV)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_version=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_namespace=$(params.DEV_NAMESPACE),applications[$(params.APPLICATION_NUMBER_TEST)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_version=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_namespace=$(params.TEST_NAMESPACE)"
+          value: "applications[$(params.APPLICATION_NUMBER_DEV)].source_ref=$(params.GIT_SHORT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_version=$(params.GIT_SHORT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_namespace=$(params.DEV_NAMESPACE),applications[$(params.APPLICATION_NUMBER_TEST)].source_ref=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_version=$(params.GIT_REVISION),applications[$(params.APPLICATION_NUMBER_TEST)].values.image_namespace=$(params.TEST_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
         - oc-tag-image-test
+
+    - name: helm-argocd-apps-branches # only deploy to dev
+      conditions:
+      - conditionRef: is-not-equal
+        params:
+          - name: left
+            value: "master"
+          - name: right
+            value: "$(params.GIT_BRANCH)"
+      taskRef:
+        name: helm-template-from-source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: charts_dir
+          value: cicd/applications/deployment
+        - name: values_file
+          value: values-applications.yaml
+        - name: release_name
+          value: my
+        - name: target_namespace
+          value: "$(params.BUILD_NAMESPACE)"
+        - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task (name=) OR gitops and check it in first
+          value: "applications[$(params.APPLICATION_NUMBER_DEV)].name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications[$(params.APPLICATION_NUMBER_DEV)].source_ref=$(params.GIT_SHORT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_version=$(params.GIT_SHORT_REVISION),applications[$(params.APPLICATION_NUMBER_DEV)].values.image_namespace=$(params.DEV_NAMESPACE)"
+      runAfter:
+        - oc-tag-image-dev
 
     - name: argocd-sync-application
       taskRef:
@@ -201,10 +242,10 @@ spec:
         workspace: argocd-env-secret
       params:
       - name: application-name
-        value: "-l app.kubernetes.io/instance=$(params.APPLICATION_NAME)" # sync by label, multiple apps different namespaces
+        value: "-l app.kubernetes.io/instance=$(params.APPLICATION_NAME)" # sync by label, multiple apps different namespaces synced good thing
       - name: flags
         value: --insecure
       - name: revision
-        value: "$(params.GIT_REVISION)"
+        value: "$(params.GIT_SHORT_REVISION)"
       runAfter:
-      - helm-argocd-apps
+      - helm-argocd-apps-master
