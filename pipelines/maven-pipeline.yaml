@@ -20,6 +20,12 @@ spec:
   - name: GIT_REF
     type: string
     default: "refs/heads/master"
+  - name: GIT_SHORT_REVISION
+    type: string
+    default: ""
+  - name: GIT_BRANCH
+    type: string
+    default: "master"
   - name: MAVEN_MIRROR_URL
     type: string
     default: "http://repo1.maven.org/maven2"

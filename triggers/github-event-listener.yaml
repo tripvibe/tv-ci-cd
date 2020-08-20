@@ -14,18 +14,11 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
               body.repository.full_name == 'eformat/tv-data-lake')
-      bindings:
-        - name: github-trigger-binding
-      template:
-        name: tv-data-lake-trigger-template
-
-    - name: tv-data-lake-webhook-from-pr # take a different approach for PR's
-      interceptors:
-        - cel:
-            filter: >-
-              (header.match('X-GitHub-Event', 'pull_request') &&
-               body.action == 'opened' || body.action == 'synchronize') &&
-               body.pull_request.head.repo.full_name == 'eformat/tv-data-lake'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
       bindings:
         - name: github-trigger-binding
       template:

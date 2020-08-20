@@ -13,3 +13,7 @@ spec:
       value: $(body.head_commit.id)
     - name: git-ref
       value: $(body.ref)
+    - name: git-branch
+      value: $(body.extensions.branch_name)
+    - name: git-short-revision
+      value: $(body.extensions.truncated_sha)

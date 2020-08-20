@@ -11,10 +11,14 @@ spec:
       description: The git revision
       default: master
     - name: git-ref
-      description: The git branch ref
+      description: The full git ref
       default: master
     - name: git-repo-name
       description: The name of the deployment to be created / patched
+    - name: git-branch
+      description: The git branch name
+    - name: git-short-revision
+      description: Seven character git sha
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -33,8 +37,12 @@ spec:
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
             value: '$(params.git-revision)'
+          - name: GIT_SHORT_REVISION
+            value: '$(params.git-short-revision)'
           - name: GIT_REF
             value: '$(params.git-ref)'
+          - name: GIT_BRANCH
+            value: '$(params.git-branch)'
           - name: MAVEN_MIRROR_URL
             value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
           - name: MAVEN_OPTS
