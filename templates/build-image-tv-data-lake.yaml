@@ -29,11 +29,11 @@ objects:
     - name: GIT_REVISION
       value: master # or git tag, revision
     - name: GIT_REF
-      value: "refs/heads/master"
+      value: ""
     - name: GIT_SHORT_REVISION
-      value: "master"
+      value: ""
     - name: GIT_BRANCH
-      value: "master"
+      value: ""
     - name: MAVEN_MIRROR_URL
       value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
     - name: MAVEN_OPTS
