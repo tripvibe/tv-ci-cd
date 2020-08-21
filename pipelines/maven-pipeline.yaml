@@ -11,6 +11,9 @@ spec:
   - name: APPLICATION_NAME
     type: string
     default: ""
+  - name: APPLICATION_NAME_KEY
+    type: string
+    default: ""
   - name: GIT_URL
     type: string
     default: ""

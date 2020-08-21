@@ -33,6 +33,8 @@ spec:
         params:
           - name: APPLICATION_NAME
             value: '$(params.git-repo-name)'
+          - name: APPLICATION_NAME_KEY
+            value: '$(params.git-repo-name-key)'
           - name: GIT_URL
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
