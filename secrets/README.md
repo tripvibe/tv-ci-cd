@@ -8,6 +8,8 @@ dumping ground for secrets. this needs solutioning e.g.
 
 ## Sealed Secrets
 
+UJ also supports this deployment (wip - fixme, auth)
+
 Backup cluster secret - Not safe for git !
 ```
 oc get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml > sealed-secret-master.key
