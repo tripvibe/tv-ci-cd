@@ -4,6 +4,6 @@
 
 ## middleware infra pipelines
 
-WIP these will migrate to a more gitops workflow, but for now are fairly simple oc apply kustomize type flows.
+WIP these will migrate to a more gitops workflow in ArgoCD, but for now are fairly simple oc apply kustomize type flows.
 
-They also have dependencies on the cluster operators, which needs to be dealt with.
+They may also have dependencies on the cluster operators, which needs to be dealt with.
