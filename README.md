@@ -49,9 +49,9 @@ oc get route webhook -o custom-columns=ROUTE:.spec.host --no-headers
 - For each component, there is a separate PVC to allow parallel component builds without two pipeline runs stepping on each others toes. In the future (post Tekton-v0.11), the PVCs can be created on the fly instead of having to be static.
 - Each source branch uses a separate output directory so we dont corrupt each other
 - The git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repos reside on the same PVC.
-- The build-and-test pipeline is designed to be generic in nature and to be used on all components.
+- The build-and-test application pipeline is designed to be generic in nature and to be used on all components.
 - Integrates with Ubiquitous Journey (ArgoCD, Helm3) app-of-apps
-- Webhooks and CEL integration for application github workflow (master/trunk-based development, short lived branch builds, pull requests's)
+- Webhooks and CEL integration for application github workflow (master/trunk-based development, short lived branch builds, pull requests)
   - branches, pr's - deployed to development namespace only
   - master - deployed to development and test namespaces
   - git commit short and long ref used for images taggging and argocd sync
