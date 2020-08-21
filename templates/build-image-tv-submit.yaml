@@ -24,6 +24,8 @@ objects:
     params:
     - name: APPLICATION_NAME
       value: tv-submit
+    - name: APPLICATION_NAME_KEY
+      value: ""
     - name: GIT_URL
       value: https://github.com/eformat/tv-submit.git
     - name: GIT_REVISION

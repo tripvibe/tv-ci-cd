@@ -34,7 +34,7 @@ argocd_projects:
   destinations: *allowed_destinations
 
 applications:
-  tv-data-lake-dev:
+  tv_data_lake_dev:
     enabled: true
     source: https://github.com/eformat/tv-data-lake.git
     source_path: chart
@@ -46,7 +46,7 @@ applications:
     project:
       name: tripvibe
       enabled: true
-  tv-data-lake-test:
+  tv_data_lake_test:
     enabled: true
     source: https://github.com/eformat/tv-data-lake.git
     source_path: chart
@@ -58,7 +58,7 @@ applications:
     project:
       name: tripvibe
       enabled: true
-  tv-submit-dev:
+  tv_submit_dev:
     enabled: true
     source: https://github.com/eformat/tv-submit.git
     source_path: chart
@@ -70,7 +70,7 @@ applications:
     project:
       name: tripvibe
       enabled: true
-  tv-submit-test:
+  tv_submit_test:
     enabled: true
     source: https://github.com/eformat/tv-submit.git
     source_path: chart

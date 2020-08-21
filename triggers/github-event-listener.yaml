@@ -19,6 +19,8 @@ spec:
             expression: 'truncate(body.head_commit.id, 7)'
           - key: extensions.branch_name
             expression: "split(body.ref,'/')[2]"
+          - key: extensions.name_key
+            expression: "body.repository.name.replace('-','_')"
       bindings:
         - name: github-trigger-binding
       template:
@@ -37,6 +39,8 @@ spec:
             expression: body.pull_request.head.ref
           - key: extensions.pr
             expression: body.pull_request.number
+          - key: extensions.name_key
+            expression: "body.repository.name.replace('-','_')"
       bindings:
         - name: github-trigger-binding-pr
       template:

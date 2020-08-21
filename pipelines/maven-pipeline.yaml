@@ -11,6 +11,9 @@ spec:
   - name: APPLICATION_NAME
     type: string
     default: ""
+  - name: APPLICATION_NAME_KEY
+    type: string
+    default: ""
   - name: GIT_URL
     type: string
     default: ""
@@ -196,7 +199,7 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task (name=) OR gitops and check it in first
-          value: "applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.DEV_NAMESPACE),applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.TEST_NAMESPACE)"
+          value: "applications.$(params.APPLICATION_NAME_KEY).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_namespace=$(params.DEV_NAMESPACE),applications.$(params.APPLICATION_NAME_KEY).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_namespace=$(params.TEST_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
         - oc-tag-image-test
@@ -224,7 +227,7 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values # [0] is pretty naf way to do this, perhaps do yq task (name=) OR gitops and check it in first
-          value: "applications.$(params.APPLICATION_NAME).enabled=false,applications.$(params.APPLICATION_NAME).values.fullnameOverride=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.DEV_NAMESPACE)"
+          value: "applications.$(params.APPLICATION_NAME_KEY).enabled=false,applications.$(params.APPLICATION_NAME_KEY).values.fullnameOverride=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME_KEY).name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME_KEY).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME_KEY).values.image_namespace=$(params.DEV_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
 

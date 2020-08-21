@@ -19,6 +19,8 @@ spec:
       description: The git branch name
     - name: git-short-revision
       description: Seven character git sha
+    - name: git-repo-name-key
+      description: The name of the deployment to be created / patched with underscores
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -33,6 +35,8 @@ spec:
         params:
           - name: APPLICATION_NAME
             value: '$(params.git-repo-name)'
+          - name: APPLICATION_NAME_KEY
+            value: '$(params.git-repo-name-key)'
           - name: GIT_URL
             value: '$(params.git-repo-url)'
           - name: GIT_REVISION
