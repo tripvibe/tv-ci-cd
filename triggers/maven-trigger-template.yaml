@@ -2,7 +2,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: tv-data-lake-trigger-template
+  name: maven-trigger-template
 spec:
   params:
     - name: git-repo-url
@@ -23,7 +23,7 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: build-image-tv-data-lake-
+        generateName: build-image-maven-
         labels:
           tekton.dev/pipeline: maven-pipeline
       spec:

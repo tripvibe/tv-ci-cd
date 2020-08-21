@@ -5,4 +5,4 @@ resources:
 - github-event-listener.yaml
 - github-trigger-bindings.yaml
 - github-trigger-bindings-pr.yaml
-- tv-data-lake-trigger-template.yaml
+- maven-trigger-template.yaml

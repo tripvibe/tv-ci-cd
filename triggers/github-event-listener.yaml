@@ -13,7 +13,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-data-lake')
+              body.repository.full_name == 'eformat/tv-data-lake' || body.repository.full_name == 'eformat/tv-submit')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -22,14 +22,14 @@ spec:
       bindings:
         - name: github-trigger-binding
       template:
-        name: tv-data-lake-trigger-template
+        name: maven-trigger-template
     - name: tv-data-lake-webhook-pr
       interceptors: # fixme add secret.ref
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.pull_request.head.repo.full_name == 'eformat/tv-data-lake'
+              body.pull_request.head.repo.full_name == 'eformat/tv-data-lake' || body.repository.full_name == 'eformat/tv-submit'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -40,7 +40,7 @@ spec:
       bindings:
         - name: github-trigger-binding-pr
       template:
-        name: tv-data-lake-trigger-template
+        name: maven-trigger-template
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
