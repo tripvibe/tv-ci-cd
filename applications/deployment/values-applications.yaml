@@ -1,4 +1,3 @@
-# Over rides for default values in Helm Charts
 ##############
 # Application Custom Values
 #############
@@ -29,6 +28,11 @@ ignore_differences: &ignore_differences
 ##############
 # Argo App of Apps declaration
 #############
+argocd_projects:
+- enabled: true
+  name: tripvibe
+  destinations: *allowed_destinations
+
 applications:
 - name: tv-data-lake-dev
   enabled: true
@@ -40,9 +44,8 @@ applications:
   values: *data_lake_values
   ignore_differences: *ignore_differences
   project:
-    enabled: true
     name: tripvibe
-    destinations: *allowed_destinations
+    enabled: true
 - name: tv-data-lake-test
   enabled: true
   source: https://github.com/eformat/tv-data-lake.git
@@ -53,9 +56,8 @@ applications:
   values: *data_lake_values
   ignore_differences: *ignore_differences
   project:
-    enabled: true
     name: tripvibe
-    destinations: *allowed_destinations
+    enabled: true
 - name: tv-submit-dev
   enabled: true
   source: https://github.com/eformat/tv-submit.git
@@ -66,9 +68,8 @@ applications:
   values: *submit_values
   ignore_differences: *ignore_differences
   project:
-    enabled: true
     name: tripvibe
-    destinations: *allowed_destinations
+    enabled: true
 - name: tv-submit-test
   enabled: true
   source: https://github.com/eformat/tv-submit.git
@@ -79,6 +80,5 @@ applications:
   values: *submit_values
   ignore_differences: *ignore_differences
   project:
-    enabled: true
     name: tripvibe
-    destinations: *allowed_destinations
+    enabled: true
