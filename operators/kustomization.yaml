@@ -5,3 +5,5 @@ bases:
 - strimzi
 - tekton
 - sealed-secrets
+- infinispan/overlays/development
+- infinispan/overlays/test
