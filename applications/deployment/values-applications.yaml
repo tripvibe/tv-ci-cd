@@ -56,7 +56,7 @@ applications:
     enabled: true
     name: tripvibe
     destinations: *allowed_destinations
-- name: tv-submit
+- name: tv-submit-dev
   enabled: true
   source: https://github.com/eformat/tv-submit.git
   source_path: chart
@@ -69,7 +69,7 @@ applications:
     enabled: true
     name: tripvibe
     destinations: *allowed_destinations
-- name: tv-submit
+- name: tv-submit-test
   enabled: true
   source: https://github.com/eformat/tv-submit.git
   source_path: chart
