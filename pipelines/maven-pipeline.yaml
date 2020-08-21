@@ -41,12 +41,6 @@ spec:
   - name: TEST_NAMESPACE
     type: string
     default: "labs-test"
-  - name: APPLICATION_NUMBER_DEV # in values-applications.yaml, see below for helm override
-    type: string
-    default: "0"
-  - name: APPLICATION_NUMBER_TEST # in values-applications.yaml, see below for helm override
-    type: string
-    default: "1"
   tasks:
     - name: fetch-app-repository
       taskRef:

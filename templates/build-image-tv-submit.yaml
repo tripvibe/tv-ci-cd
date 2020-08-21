@@ -44,7 +44,3 @@ objects:
       value: "labs-dev"
     - name: TEST_NAMESPACE
       value: "labs-test"
-    - name: APPLICATION_NUMBER_DEV # fixme array in values-applications
-      value: "2"
-    - name: APPLICATION_NUMBER_TEST # fixme array in values-applications
-      value: "3"
