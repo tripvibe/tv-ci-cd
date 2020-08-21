@@ -17,5 +17,3 @@ spec:
       value: $(body.extensions.branch_name)
     - name: git-short-revision
       value: $(body.extensions.truncated_sha)
-    - name: git-repo-name-key
-      value: $(body.repository.name_key)
