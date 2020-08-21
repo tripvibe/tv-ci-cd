@@ -1,6 +1,6 @@
 {{- if .Values.applications }}
-{{- range $app := .Values.applications }}
-{{- if $app.enabled }}
+{{- range $app, $val := .Values.applications }}
+{{- if .enabled }}
 
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -8,52 +8,52 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  name: {{ $app.name }}
+  name: {{ $app }}
   labels:
-{{- if contains $app.values.fullnameOverride $app.name }}
-    app.kubernetes.io/instance: {{ $app.values.fullnameOverride }}
+{{- if contains .values.fullnameOverride $app }}
+    app.kubernetes.io/instance: {{ .values.fullnameOverride }}
 {{- else -}}
-    app.kubernetes.io/instance: {{ $app.name }}
+    app.kubernetes.io/instance: {{ $app }}
 {{- end }}
 spec:
   destination:
-    namespace: {{ $app.destination | default "labs-ci-cd" }}
-    server: {{ $app.cluster_api | default "https://kubernetes.default.svc" }}
-{{- if $app.project.enabled }}
-  project: {{ $app.project.name }}
+    namespace: {{ .destination | default "labs-ci-cd" }}
+    server: {{ .cluster_api | default "https://kubernetes.default.svc" }}
+{{- if .project.enabled }}
+  project: {{ .project.name }}
 {{- else -}}
   project: default
 {{- end }}
   source:
-{{- if not $app.no_helm }}
+{{- if not .no_helm }}
     helm:
-      releaseName: {{ $app.name }}
-{{- if $app.helm_values }}
+      releaseName: {{ $app }}
+{{- if .helm_values }}
       valueFiles:
-{{- toYaml $app.helm_values | nindent 8 }}
+{{- toYaml .helm_values | nindent 8 }}
 {{- end }}
-{{- if $app.values }}
+{{- if .values }}
       values: |
-{{- toYaml $app.values | nindent 8 }}
+{{- toYaml .values | nindent 8 }}
 {{- end }}
 {{- end }}
-    {{- if $app.source_path }}
-    path: {{ $app.source_path }}
+    {{- if .source_path }}
+    path: {{ .source_path }}
     {{- end }}
-    repoURL: {{ $app.source }}
-    targetRevision: {{ $app.source_ref | default "master" | quote }}
-    {{- if $app.chart_name }}
-    chart: {{ $app.chart_name }}
+    repoURL: {{ .source }}
+    targetRevision: {{ .source_ref | default "master" | quote }}
+    {{- if .chart_name }}
+    chart: {{ .chart_name }}
     {{- end}}
-{{- if $app.sync_policy_automated }}
+{{- if .sync_policy_automated }}
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
       validate: true
 {{- end }}
-{{- if $app.ignore_differences}}
-{{ toYaml $app.ignore_differences | indent 2 }}
+{{- if .ignore_differences}}
+{{ toYaml .ignore_differences | indent 2 }}
 {{- end }}
 {{- end }}
 {{- end }}

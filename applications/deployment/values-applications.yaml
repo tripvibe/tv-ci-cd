@@ -34,51 +34,51 @@ argocd_projects:
   destinations: *allowed_destinations
 
 applications:
-- name: tv-data-lake-dev
-  enabled: true
-  source: https://github.com/eformat/tv-data-lake.git
-  source_path: chart
-  sync_policy_automated: true
-  destination: labs-dev
-  source_ref: master # overridden by git revision in pipeline trigger
-  values: *data_lake_values
-  ignore_differences: *ignore_differences
-  project:
-    name: tripvibe
+  tv-data-lake-dev:
     enabled: true
-- name: tv-data-lake-test
-  enabled: true
-  source: https://github.com/eformat/tv-data-lake.git
-  source_path: chart
-  sync_policy_automated: true
-  destination: labs-test
-  source_ref: master # overridden by git revision in pipeline trigger
-  values: *data_lake_values
-  ignore_differences: *ignore_differences
-  project:
-    name: tripvibe
+    source: https://github.com/eformat/tv-data-lake.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *data_lake_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv-data-lake-test:
     enabled: true
-- name: tv-submit-dev
-  enabled: true
-  source: https://github.com/eformat/tv-submit.git
-  source_path: chart
-  sync_policy_automated: true
-  destination: labs-dev
-  source_ref: master # overridden by git revision in pipeline trigger
-  values: *submit_values
-  ignore_differences: *ignore_differences
-  project:
-    name: tripvibe
+    source: https://github.com/eformat/tv-data-lake.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *data_lake_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv-submit-dev:
     enabled: true
-- name: tv-submit-test
-  enabled: true
-  source: https://github.com/eformat/tv-submit.git
-  source_path: chart
-  sync_policy_automated: true
-  destination: labs-test
-  source_ref: master # overridden by git revision in pipeline trigger
-  values: *submit_values
-  ignore_differences: *ignore_differences
-  project:
-    name: tripvibe
+    source: https://github.com/eformat/tv-submit.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *submit_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv-submit-test:
     enabled: true
+    source: https://github.com/eformat/tv-submit.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *submit_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true

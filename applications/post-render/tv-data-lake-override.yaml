@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tv-data-lake-dev
+spec:
+  source:
+    helm:
+      values: |
+        fullnameOverride: foobar
