@@ -18,15 +18,26 @@ helm template -f ubiquitous-journey/values-tooling.yaml ubiquitous-journey/ | oc
 Deploy tripvibe Tekton resources (this will move to its own seed pipeline)
 ```bash
 cd ../
+oc project labs-ci-cd
 kustomize build | oc apply -f-
 ```
 
-Start a pipeline build manually
+Pre-requisites for applications run middleware pipelines manually (wip - these should become gitops)
+```
+# cluster operators
+kustomize build operators | oc apply -f-
+
+# middleware
+oc process s3-deploy | oc -n labs-ci-cd create -f-
+oc process kafka-deploy | oc -n labs-ci-cd create -f-
+```
+
+Start an Application pipeline build manually
 ```bash
 oc process build-image-tv-data-lake | oc create -f-
 ```
 
-Else add json webhook in github repo pointing to this route to trigger pipeline
+Else add json webhook in github repo pointing to this route to trigger pipeline (wip - automation to create webhooks)
 ```bash
 oc get route webhook -o custom-columns=ROUTE:.spec.host --no-headers
 ```
