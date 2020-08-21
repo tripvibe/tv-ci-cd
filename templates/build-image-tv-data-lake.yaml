@@ -33,7 +33,7 @@ objects:
     - name: GIT_SHORT_REVISION
       value: "master"
     - name: GIT_BRANCH
-      value: ""
+      value: "master"
     - name: MAVEN_MIRROR_URL
       value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
     - name: MAVEN_OPTS

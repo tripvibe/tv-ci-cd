@@ -25,9 +25,9 @@ objects:
     - name: GIT_REF
       value: ""
     - name: GIT_SHORT_REVISION
-      value: ""
+      value: "master"
     - name: GIT_BRANCH
-      value: ""
+      value: "master"
     - name: BUILD_NAMESPACE
       value: "labs-ci-cd"
     - name: DEV_NAMESPACE
