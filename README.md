@@ -15,6 +15,23 @@ Deploy UJ apps
 helm template -f ubiquitous-journey/values-tooling.yaml ubiquitous-journey/ | oc apply -n labs-ci-cd -f-
 ```
 
+Prerequisite deployments as cluster admin (wip - this should become more gitops)
+```bash
+# cluster operators
+kustomize build operators | oc apply -f-
+```
+
+Prerequisite Secrets (wip - this should become more gitops)
+```
+# decrypt master for sealed secrets
+ansible-vault decrypt secrets/sealed-secret-master.key --vault-password-file=~/.vault_pass.txt
+# edit secret name
+pod=$(oc -n kube-system get secret -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o name)
+sed -i -e "s|name:.*|name: ${pod##secret/}|" secrets/sealed-secret-master.key
+# restart sealedsecret controller pod
+oc delete pod -n kube-system -l name=sealed-secrets-controller
+```
+
 Deploy tripvibe Tekton resources (wip - this will move to its own seed pipeline)
 ```bash
 cd ../
@@ -24,9 +41,6 @@ kustomize build | oc apply -f-
 
 Pre-requisites for applications run middleware pipelines manually (wip - these should become gitops)
 ```
-# cluster operators
-kustomize build operators | oc apply -f-
-
 # middleware
 oc process s3-deploy | oc -n labs-ci-cd create -f-
 oc process kafka-deploy | oc -n labs-ci-cd create -f-

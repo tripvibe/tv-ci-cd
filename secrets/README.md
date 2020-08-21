@@ -19,10 +19,13 @@ ansible-vault encrypt sealed-secret-master.key --vault-password-file=~/.vault_pa
 
 (new cluster) Replace new secret install with existing key
 ```
-# decrypt master
-ansible-vault decrypt sealed-secret-master.key --vault-password-file=~/.vault_pass.txt
+# decrypt master for sealed secrets
+ansible-vault decrypt secrets/sealed-secret-master.key --vault-password-file=~/.vault_pass.txt
 # edit secret name
-oc replace -f ~/tmp/sealed-secret-master.key
+pod=$(oc -n kube-system get secret -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o name)
+sed -i -e "s|name:.*|name: ${pod##secret/}|" secrets/sealed-secret-master.key
+oc replace -f ~/secrets/sealed-secret-master.key
+# restart sealedsecret controller pod
 oc delete pod -n kube-system -l name=sealed-secrets-controller
 ```
 
