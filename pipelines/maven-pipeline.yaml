@@ -201,7 +201,7 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values # strictly speaking not very gitops
-          value: "applications.$(params.APP_OF_APPS_DEV_KEY).enabled=true,applications.$(params.APPLICATION_NAME).values.fullnameOverride=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.DEV_NAMESPACE)"
+          value: "applications.$(params.APP_OF_APPS_DEV_KEY).enabled=true,applications.$(params.APP_OF_APPS_DEV_KEY).source_ref=$(params.GIT_REVISION),applications.$(params.APP_OF_APPS_DEV_KEY).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APP_OF_APPS_DEV_KEY).values.image_namespace=$(params.DEV_NAMESPACE),applications.$(params.APP_OF_APPS_DEV_TEST).enabled=true,applications.$(params.APP_OF_APPS_TEST_KEY).source_ref=$(params.GIT_REVISION),applications.$(params.APP_OF_APPS_TEST_KEY).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APP_OF_APPS_TEST_KEY).values.image_namespace=$(params.TEST_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
         - oc-tag-image-test
@@ -229,7 +229,7 @@ spec:
         - name: target_namespace
           value: "$(params.BUILD_NAMESPACE)"
         - name: overwrite_values # strictly speaking not very gitops
-
+          value: "applications.$(params.APP_OF_APPS_DEV_KEY).enabled=true,applications.$(params.APP_OF_APPS_DEV_KEY).values.fullnameOverride=$(params.APP_OF_APPS_DEV_KEY)-$(params.GIT_BRANCH),applications.$(params.APP_OF_APPS_DEV_KEY).name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.DEV_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
 
