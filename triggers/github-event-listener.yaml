@@ -7,13 +7,13 @@ metadata:
     app: github
 spec:
   serviceAccountName: pipeline
-  triggers:
+  triggers: # fixme - ideally we only have two triggers, on for master, one for branches, pr  
     - name: tv-data-lake-webhook-all-branches
       interceptors: # fixme add secret.ref
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-data-lake' || body.repository.full_name == 'eformat/tv-submit')
+              body.repository.full_name == 'eformat/tv-data-lake')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -22,14 +22,14 @@ spec:
       bindings:
         - name: github-trigger-binding
       template:
-        name: maven-trigger-template
+        name: tv-data-lake-maven-trigger-template
     - name: tv-data-lake-webhook-pr
       interceptors: # fixme add secret.ref
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.pull_request.head.repo.full_name == 'eformat/tv-data-lake' || body.repository.full_name == 'eformat/tv-submit'
+              body.pull_request.head.repo.full_name == 'eformat/tv-data-lake'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -40,7 +40,41 @@ spec:
       bindings:
         - name: github-trigger-binding-pr
       template:
-        name: maven-trigger-template
+        name: tv-data-lake-maven-trigger-template
+
+    - name: tv-submit-webhook-all-branches
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'push') &&
+              body.repository.full_name == 'eformat/tv-submit')
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
+      bindings:
+        - name: github-trigger-binding
+      template:
+        name: tv-submit-maven-trigger-template
+    - name: tv-submit-webhook-pr
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'pull_request') &&
+              body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+              body.repository.full_name == 'eformat/tv-submit'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.pull_request.head.sha, 7)'
+          - key: extensions.branch_name
+            expression: body.pull_request.head.ref
+          - key: extensions.pr
+            expression: body.pull_request.number
+      bindings:
+        - name: github-trigger-binding-pr
+      template:
+        name: tv-submit-maven-trigger-template
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

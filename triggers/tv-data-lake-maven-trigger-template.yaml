@@ -1,0 +1,69 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: tv-data-lake-maven-trigger-template
+spec:
+  params:
+    - name: git-repo-url
+      description: The git repository url
+    - name: git-revision
+      description: The git revision
+      default: master
+    - name: git-ref
+      description: The full git ref
+      default: master
+    - name: git-repo-name
+      description: The name of the deployment to be created / patched
+    - name: git-branch
+      description: The git branch name
+    - name: git-short-revision
+      description: Seven character git sha
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: 'build-image-maven-$(params.git-repo-name)-'
+        labels:
+          tekton.dev/pipeline: maven-pipeline
+      spec:
+        serviceAccountName: pipeline
+        pipelineRef:
+          name: maven-pipeline
+        params:
+          - name: APPLICATION_NAME
+            value: '$(params.git-repo-name)'
+          - name: GIT_URL
+            value: '$(params.git-repo-url)'
+          - name: GIT_REVISION
+            value: '$(params.git-revision)'
+          - name: GIT_SHORT_REVISION
+            value: '$(params.git-short-revision)'
+          - name: GIT_REF
+            value: '$(params.git-ref)'
+          - name: GIT_BRANCH
+            value: '$(params.git-branch)'
+          - name: MAVEN_MIRROR_URL
+            value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
+          - name: MAVEN_OPTS
+            value: "-DskipTests" # fixme run tests
+          - name: BUILD_NAMESPACE
+            value: "labs-ci-cd"
+          - name: DEV_NAMESPACE
+            value: "labs-dev"
+          - name: TEST_NAMESPACE
+            value: "labs-test"
+          - name: APP_OF_APPS_DEV_KEY # !! fixme mike - this whole trigger template can be removed when string.replace() works in CEL listener image - hopefully 1.1.0. we are doing this here cause its the only place we can do it !!
+            value: "tv_data_lake_dev"
+          - name: APP_OF_APPS_TEST_KEY # !! fixme mike - this whole trigger template can be removed when string.replace() works in CEL listener image - hopefully 1.1.0. we are doing this here cause its the only place we can do it !!
+            value: "tv_data_lake_test"
+        workspaces:
+        - name: shared-workspace
+          persistentVolumeClaim:
+            claimName: build-images
+        - name: maven-settings
+          persistentVolumeClaim:
+            claimName: maven-source
+        - name: argocd-env-secret
+          secret:
+            secretName: argocd-env
