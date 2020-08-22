@@ -10,7 +10,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
   name: {{ .name }}
   labels:
-{{- if contains .values.fullnameOverride $app }}
+{{- if contains .values.fullnameOverride .name }}
     app.kubernetes.io/instance: {{ .values.fullnameOverride }}
 {{- else -}}
     app.kubernetes.io/instance: {{ .name }}
