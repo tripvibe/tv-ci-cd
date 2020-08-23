@@ -91,7 +91,7 @@ applications:
       name: tripvibe
       enabled: true
   tv_query_dev:
-    name: tv-submit-dev
+    name: tv-query-dev
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-query.git
     source_path: chart
