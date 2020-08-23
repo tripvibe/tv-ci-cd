@@ -12,7 +12,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: tv-streams:latest
+      name: tv-streams-trip-5:latest
   postCommit: {}
   runPolicy: "Parallel"
   resources: {}
