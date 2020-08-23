@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  creationTimestamp: null
+  labels:
+    app: tv-streams-route-5
+  name: tv-streams-route-5
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: ""
