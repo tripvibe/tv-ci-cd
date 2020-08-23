@@ -4,3 +4,5 @@ kind: Kustomization
 bases:
 - is.yaml
 - bc.yaml
+
+namespace: labs-ci-cd

@@ -112,11 +112,10 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "kustomize build $1 | oc apply -n $2 -f-"
+          value: "kustomize build $1 | oc apply -f-"
         - name: ARGS
           value:
             - "$(params.APPLICATION_NAME)/cicd/applications"
-            - "$(params.BUILD_NAMESPACE)"
       runAfter:
         - maven-run
 
