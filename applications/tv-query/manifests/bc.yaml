@@ -1,0 +1,33 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  creationTimestamp: null
+  labels:
+    app: tv-query
+  name: tv-query
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: tv-query:latest
+  postCommit: {}
+  runPolicy: "Parallel"
+  resources: {}
+  source:
+    binary: {}
+    type: Binary
+  strategy:
+    dockerStrategy: {dockerfilePath: Dockerfile.jvm}
+    type: Docker
+  triggers:
+  - github:
+      secret: O2vVInuS2QkdCm4JnsvT
+    type: GitHub
+  - generic:
+      secret: SPcld7SlEp9-wdHhGi1E
+    type: Generic
+status:
+  lastVersion: 0

@@ -9,6 +9,10 @@ tv_submit_values: &submit_values
   fullnameOverride: tv-submit # important to use this if want same app name in multiple ns, else release.name used in chart
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: tv-submit
+tv_query_values: &query_values
+  fullnameOverride: tv-query # important to use this if want same app name in multiple ns, else release.name used in chart
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-query
 allowed_destinations: &allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
@@ -82,6 +86,32 @@ applications:
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
     values: *submit_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_query_dev:
+    name: tv-submit-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-query.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *query_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_query_test:
+    name: tv-query-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-query.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *query_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe

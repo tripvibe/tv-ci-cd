@@ -5,6 +5,7 @@ resources:
 - github-event-listener.yaml
 - github-trigger-bindings.yaml
 - github-trigger-bindings-pr.yaml
-#- maven-trigger-template.yaml
+#- maven-trigger-template.yaml # fixme - there should be only one template
 - tv-data-lake-maven-trigger-template.yaml
 - tv-submit-maven-trigger-template.yaml
+- tv-query-maven-trigger-template.yaml
