@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  APP_ID: tv-streams-trip-5
+  KEY_NAME: trip
+  SOURCE_TOPIC: tripvibe
+  WINDOW_MINUTES: "5"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: tv-streams-trip-5

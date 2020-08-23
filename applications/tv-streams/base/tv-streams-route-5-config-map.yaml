@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  APP_ID: tv-streams-route-5
+  KEY_NAME: route
+  SOURCE_TOPIC: tripvibe
+  WINDOW_MINUTES: "5"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: tv-streams-route-5
+

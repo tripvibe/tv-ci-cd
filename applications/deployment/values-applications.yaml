@@ -17,6 +17,10 @@ sc_routes_values: &routes_values
   fullnameOverride: sc-routes # important to use this if want same app name in multiple ns, else release.name used in chart
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: sc-routes
+tv_streams_values: &streams_values
+  fullnameOverride: tv-streams # important to use this if want same app name in multiple ns, else release.name used in chart
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-streams
 allowed_destinations: &allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
@@ -142,6 +146,110 @@ applications:
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
     values: *routes_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_route_1_dev:
+    name: tv-streams-route-1-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_route_1_test:
+    name: tv_streams-route-1-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_route_5_dev:
+    name: tv-streams-route-5-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_route_5_test:
+    name: tv_streams-route-5-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_trip_1_dev:
+    name: tv-streams-trip-1-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_trip_1_test:
+    name: tv_streams-trip-1-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_trip_5_dev:
+    name: tv-streams-trip-5-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tv_streams_trip_5_test:
+    name: tv_streams-trip-5-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tv-streams.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *streams_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe

@@ -143,6 +143,142 @@ spec:
         - name: github-trigger-binding-pr
       template:
         name: sc-routes-maven-trigger-template
+
+    - name: tv-streams-route-1-webhook-all-branches
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'push') &&
+              body.repository.full_name == 'eformat/tv-streams')
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
+      bindings:
+        - name: github-trigger-binding
+      template:
+        name: tv-streams-route-1-maven-trigger-template
+    - name: tv-streams-route-1-webhook-pr
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'pull_request') &&
+              body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+              body.repository.full_name == 'eformat/tv-streams'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.pull_request.head.sha, 7)'
+          - key: extensions.branch_name
+            expression: body.pull_request.head.ref
+          - key: extensions.pr
+            expression: body.pull_request.number
+      bindings:
+        - name: github-trigger-binding-pr
+      template:
+        name: tv-streams-route-1-maven-trigger-template
+
+    - name: tv-streams-route-5-webhook-all-branches
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'push') &&
+              body.repository.full_name == 'eformat/tv-streams')
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
+      bindings:
+        - name: github-trigger-binding
+      template:
+        name: tv-streams-route-5-maven-trigger-template
+    - name: tv-streams-route-5-webhook-pr
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'pull_request') &&
+              body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+              body.repository.full_name == 'eformat/tv-streams'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.pull_request.head.sha, 7)'
+          - key: extensions.branch_name
+            expression: body.pull_request.head.ref
+          - key: extensions.pr
+            expression: body.pull_request.number
+      bindings:
+        - name: github-trigger-binding-pr
+      template:
+        name: tv-streams-route-5-maven-trigger-template
+
+    - name: tv-streams-trip-1-webhook-all-branches
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'push') &&
+              body.repository.full_name == 'eformat/tv-streams')
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
+      bindings:
+        - name: github-trigger-binding
+      template:
+        name: tv-streams-trip-1-maven-trigger-template
+    - name: tv-streams-trip-1-webhook-pr
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'pull_request') &&
+              body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+              body.repository.full_name == 'eformat/tv-streams'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.pull_request.head.sha, 7)'
+          - key: extensions.branch_name
+            expression: body.pull_request.head.ref
+          - key: extensions.pr
+            expression: body.pull_request.number
+      bindings:
+        - name: github-trigger-binding-pr
+      template:
+        name: tv-streams-trip-1-maven-trigger-template
+
+    - name: tv-streams-trip-5-webhook-all-branches
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'push') &&
+              body.repository.full_name == 'eformat/tv-streams')
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.head_commit.id, 7)'
+          - key: extensions.branch_name
+            expression: "split(body.ref,'/')[2]"
+      bindings:
+        - name: github-trigger-binding
+      template:
+        name: tv-streams-trip-5-maven-trigger-template
+    - name: tv-streams-trip-5-webhook-pr
+      interceptors: # fixme add secret.ref
+      - cel:
+          filter: >-
+            (header.match('X-GitHub-Event', 'pull_request') &&
+              body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+              body.repository.full_name == 'eformat/tv-streams'
+          overlays:
+          - key: extensions.truncated_sha
+            expression: 'truncate(body.pull_request.head.sha, 7)'
+          - key: extensions.branch_name
+            expression: body.pull_request.head.ref
+          - key: extensions.pr
+            expression: body.pull_request.number
+      bindings:
+        - name: github-trigger-binding-pr
+      template:
+        name: tv-streams-trip-5-maven-trigger-template
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: build-image-tv-streams-route-5
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: build-image-tv-streams-route-5-
+  spec:
+    pipelineRef:
+      name: maven-pipeline
+    workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: build-images
+    - name: maven-settings
+      persistentVolumeClaim:
+        claimName: maven-source
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
+    params:
+    - name: APPLICATION_NAME
+      value: tv-streams-route-5
+    - name: GIT_URL
+      value: https://github.com/eformat/tv-streams.git
+    - name: GIT_REVISION
+      value: master # or git tag, revision
+    - name: GIT_REF
+      value: ""
+    - name: GIT_SHORT_REVISION
+      value: "master"
+    - name: GIT_BRANCH
+      value: "master"
+    - name: MAVEN_MIRROR_URL
+      value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
+    - name: MAVEN_OPTS
+      value: "-DskipTests" # fixme run tests
+    - name: BUILD_NAMESPACE
+      value: "labs-ci-cd"
+    - name: DEV_NAMESPACE
+      value: "labs-dev"
+    - name: TEST_NAMESPACE
+      value: "labs-test"
+    - name: APP_OF_APPS_DEV_KEY
+      value: "tv_streams_route_5_dev"
+    - name: APP_OF_APPS_TEST_KEY
+      value: "tv_streams_route_5_test"

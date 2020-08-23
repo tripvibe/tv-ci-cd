@@ -6,5 +6,9 @@ resources:
 - build-image-tv-submit.yaml
 - build-image-tv-query.yaml
 - build-image-sc-routes.yaml
+- build-image-tv-streams-route-1.yaml
+- build-image-tv-streams-route-5.yaml
+- build-image-tv-streams-trip-1.yaml
+- build-image-tv-streams-trip-5.yaml
 - s3-deploy.yaml
 - kafka-deploy.yaml

@@ -6,3 +6,6 @@ bases:
 - tv-submit/manifests
 - tv-query/manifests
 - sc-routes/manifests
+- tv-streams/overalys/cicd
+- tv-streams/overlays/development
+- tv-streams/overlays/test

@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- is.yaml
+- bc.yaml
+
+namespace: labs-ci-cd
