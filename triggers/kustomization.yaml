@@ -10,3 +10,7 @@ resources:
 - tv-submit-maven-trigger-template.yaml
 - tv-query-maven-trigger-template.yaml
 - sc-routes-maven-trigger-template.yaml
+- tv-streams-route-1-maven-trigger-template.yaml
+- tv-streams-route-5-maven-trigger-template.yaml
+- tv-streams-trip-1-maven-trigger-template.yaml
+- tv-streams-trip-5-maven-trigger-template.yaml
