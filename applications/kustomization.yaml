@@ -5,3 +5,4 @@ bases:
 - tv-data-lake/manifests
 - tv-submit/manifests
 - tv-query/manifests
+- sc-routes/manifests

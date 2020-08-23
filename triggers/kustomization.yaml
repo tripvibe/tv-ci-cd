@@ -9,3 +9,4 @@ resources:
 - tv-data-lake-maven-trigger-template.yaml
 - tv-submit-maven-trigger-template.yaml
 - tv-query-maven-trigger-template.yaml
+- sc-routes-maven-trigger-template.yaml

@@ -13,6 +13,10 @@ tv_query_values: &query_values
   fullnameOverride: tv-query # important to use this if want same app name in multiple ns, else release.name used in chart
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: tv-query
+sc_routes_values: &routes_values
+  fullnameOverride: sc-routes # important to use this if want same app name in multiple ns, else release.name used in chart
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: sc-routes
 allowed_destinations: &allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
@@ -107,6 +111,32 @@ applications:
     name: tv-query-test
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-query.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *query_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  sc_routes_dev:
+    name: sc-routes-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/sc-routes.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *routes_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  sc_routes_test:
+    name: sc-routes-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/sc-routes.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
