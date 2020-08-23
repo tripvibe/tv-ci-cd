@@ -141,7 +141,7 @@ applications:
     sync_policy_automated: true
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *query_values
+    values: *routes_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
