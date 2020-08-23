@@ -164,7 +164,7 @@ applications:
       name: tripvibe
       enabled: true
   tv_streams_route_1_test:
-    name: tv_streams-route-1-test
+    name: tv-streams-route-1-test
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-streams.git
     source_path: chart
@@ -190,7 +190,7 @@ applications:
       name: tripvibe
       enabled: true
   tv_streams_route_5_test:
-    name: tv_streams-route-5-test
+    name: tv-streams-route-5-test
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-streams.git
     source_path: chart
@@ -216,7 +216,7 @@ applications:
       name: tripvibe
       enabled: true
   tv_streams_trip_1_test:
-    name: tv_streams-trip-1-test
+    name: tv-streams-trip-1-test
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-streams.git
     source_path: chart
@@ -242,7 +242,7 @@ applications:
       name: tripvibe
       enabled: true
   tv_streams_trip_5_test:
-    name: tv_streams-trip-5-test
+    name: tv-streams-trip-5-test
     enabled: false # overridden by pipeline
     source: https://github.com/eformat/tv-streams.git
     source_path: chart
