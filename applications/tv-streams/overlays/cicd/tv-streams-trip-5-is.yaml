@@ -5,8 +5,8 @@ metadata:
     openshift.io/generated-by: OpenShiftNewBuild
   creationTimestamp: null
   labels:
-    app: tv-streams-trip-1
-  name: tv-streams-trip-1
+    app: tv-streams-trip-5
+  name: tv-streams-trip-5
 spec:
   lookupPolicy:
     local: false
