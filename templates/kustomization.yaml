@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
 - build-image-tv-data-lake.yaml
 - build-image-tv-submit.yaml
+- build-image-tv-query.yaml
 - s3-deploy.yaml
 - kafka-deploy.yaml
