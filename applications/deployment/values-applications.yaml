@@ -17,10 +17,26 @@ sc_routes_values: &routes_values
   fullnameOverride: sc-routes # important to use this if want same app name in multiple ns, else release.name used in chart
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: sc-routes
-tv_streams_values: &streams_values
-  fullnameOverride: tv-streams # important to use this if want same app name in multiple ns, else release.name used in chart
+tv_streams_route_1_values: &streams_route_1_values
+  fullnameOverride: tv-streams-route-1
   image_repository: image-registry.openshift-image-registry.svc:5000
-  image_name: tv-streams
+  image_name: tv-streams-route-1
+tv_streams_route_5_values: &streams_route_5_values
+  fullnameOverride: tv-streams-route-5
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-streams-route-5
+tv_streams_trip_1_values: &streams_trip_1_values
+  fullnameOverride: tv-streams-trip-1
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-streams-trip-1
+tv_streams_trip_5_values: &streams_trip_5_values
+  fullnameOverride: tv-streams-trip-5
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tv-streams-trip-5
+tripvibe_values: &tripvibe_values
+  fullnameOverride: tripvibe # important to use this if want same app name in multiple ns, else release.name used in chart
+  image_repository: image-registry.openshift-image-registry.svc:5000
+  image_name: tripvibe
 allowed_destinations: &allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
@@ -158,7 +174,7 @@ applications:
     sync_policy_automated: true
     destination: labs-dev
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_route_1_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -171,7 +187,7 @@ applications:
     sync_policy_automated: true
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_route_1_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -184,7 +200,7 @@ applications:
     sync_policy_automated: true
     destination: labs-dev
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_route_5_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -197,7 +213,7 @@ applications:
     sync_policy_automated: true
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_route_5_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -210,7 +226,7 @@ applications:
     sync_policy_automated: true
     destination: labs-dev
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_trip_1_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -223,7 +239,7 @@ applications:
     sync_policy_automated: true
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_trip_1_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -236,7 +252,7 @@ applications:
     sync_policy_automated: true
     destination: labs-dev
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_trip_5_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
@@ -249,7 +265,33 @@ applications:
     sync_policy_automated: true
     destination: labs-test
     source_ref: master # overridden by git revision in pipeline trigger
-    values: *streams_values
+    values: *streams_trip_5_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tripvibe_dev:
+    name: tripvibe-dev
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tripvibe.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-dev
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *tripvibe_values
+    ignore_differences: *ignore_differences
+    project:
+      name: tripvibe
+      enabled: true
+  tripvibe_test:
+    name: tripvibe-test
+    enabled: false # overridden by pipeline
+    source: https://github.com/eformat/tripvibe.git
+    source_path: chart
+    sync_policy_automated: true
+    destination: labs-test
+    source_ref: master # overridden by git revision in pipeline trigger
+    values: *tripvibe_values
     ignore_differences: *ignore_differences
     project:
       name: tripvibe
