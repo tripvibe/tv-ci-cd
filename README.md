@@ -48,14 +48,14 @@ oc process kafka-deploy | oc -n labs-ci-cd create -f-
 
 Start an Application pipeline build manually
 ```bash
-oc process build-image-tv-data-lake | oc -n labs-ci-cd create -f-
-oc process build-image-tv-submit | oc -n labs-ci-cd create -f-
-oc process build-image-tv-query | oc -n labs-ci-cd create -f-
-oc process build-image-tv-streams-route-1 | oc -n labs-ci-cd create -f-
-oc process build-image-tv-streams-route-5 | oc -n labs-ci-cd create -f-
-oc process build-image-tv-streams-trip-1 | oc -n labs-ci-cd create -f-
-oc process build-image-tv-streams-trip-5 | oc -n labs-ci-cd create -f-
-oc process build-image-tripvibe | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-data-lake | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-submit | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-query | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-streams-route-1 | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-streams-route-5 | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-streams-trip-1 | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tv-streams-trip-5 | oc -n labs-ci-cd create -f-
+oc -n labs-ci-cd process build-image-tripvibe | oc -n labs-ci-cd create -f-
 ```
 
 Else add json webhook in github repo pointing to this route to trigger pipeline (wip - automation to create webhooks)
