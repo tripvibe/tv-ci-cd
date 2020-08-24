@@ -7,10 +7,10 @@ objects:
 - apiVersion: tekton.dev/v1beta1
   kind: PipelineRun
   metadata:
-    generateName: build-image-oci-tripvibe-
+    generateName: build-image-tripvibe-
   spec:
     pipelineRef:
-      name: oci-pipeline
+      name: tripvibe-ui-pipeline
     workspaces:
     - name: shared-workspace
       persistentVolumeClaim:

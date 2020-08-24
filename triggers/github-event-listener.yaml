@@ -294,7 +294,7 @@ spec:
       bindings:
         - name: github-trigger-binding
       template:
-        name: tripvibe-oci-trigger-template
+        name: tripvibe-trigger-template
     - name: tripvibe-webhook-pr
       interceptors: # fixme add secret.ref
       - cel:
@@ -312,7 +312,7 @@ spec:
       bindings:
         - name: github-trigger-binding-pr
       template:
-        name: tripvibe-oci-trigger-template
+        name: tripvibe-trigger-template
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

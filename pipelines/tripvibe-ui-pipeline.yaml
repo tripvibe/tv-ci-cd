@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: oci-pipeline
+  name: tripvibe-ui-pipeline
 spec:
   workspaces:
     - name: shared-workspace
@@ -203,6 +203,51 @@ spec:
           value: "applications.$(params.APP_OF_APPS_DEV_KEY).enabled=true,applications.$(params.APP_OF_APPS_DEV_KEY).values.fullnameOverride=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APP_OF_APPS_DEV_KEY).name=$(params.APPLICATION_NAME)-$(params.GIT_BRANCH),applications.$(params.APPLICATION_NAME).source_ref=$(params.GIT_REVISION),applications.$(params.APPLICATION_NAME).values.image_version=$(params.GIT_SHORT_REVISION),applications.$(params.APPLICATION_NAME).values.image_namespace=$(params.DEV_NAMESPACE)"
       runAfter:
         - oc-tag-image-dev
+
+    - name: oc-patch-dev-routes
+      conditions:
+      - conditionRef: is-equal
+        params:
+          - name: left
+            value: "master"
+          - name: right
+            value: "$(params.GIT_BRANCH)"
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "oc -n $1 patch route/tripvibe-sc-routes --patch \"{\"spec\":{\"host\": \"$(oc -n $1 get route tripvibe -o custom-columns=ROUTE:.spec.host --no-headers)\"}}\" --type=merge && oc -n $1 patch route/tripvibe-tv-submit --patch \"{\"spec\":{\"host\": \"$(oc -n $1 get route tripvibe -o custom-columns=ROUTE:.spec.host --no-headers)\"}}\" --type=merge"
+        - name: ARGS
+          value:
+            - "$(params.DEV_NAMESPACE)"
+      runAfter:
+        - helm-argocd-apps-master
+        - helm-argocd-apps-branches
+
+    - name: oc-patch-test-routes
+      conditions:
+      - conditionRef: is-equal
+        params:
+          - name: left
+            value: "master"
+          - name: right
+            value: "$(params.GIT_BRANCH)"
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: SCRIPT
+          value: "oc -n $1 patch route/tripvibe-sc-routes --patch \"{\"spec\":{\"host\": \"$(oc -n $1 get route tripvibe -o custom-columns=ROUTE:.spec.host --no-headers)\"}}\" --type=merge && oc -n $1 patch route/tripvibe-tv-submit --patch \"{\"spec\":{\"host\": \"$(oc -n $1 get route tripvibe -o custom-columns=ROUTE:.spec.host --no-headers)\"}}\" --type=merge"
+        - name: ARGS
+          value:
+            - "$(params.TEST_NAMESPACE)"
+      runAfter:
+        - helm-argocd-apps-master
 
     - name: argocd-sync-application-branches
       taskRef:

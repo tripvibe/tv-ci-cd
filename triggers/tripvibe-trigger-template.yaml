@@ -2,7 +2,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: tripvibe-oci-trigger-template
+  name: tripvibe-trigger-template
 spec:
   params:
     - name: git-repo-url
@@ -23,13 +23,13 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: 'build-image-oci-$(params.git-repo-name)-'
+        generateName: 'build-image-$(params.git-repo-name)-'
         labels:
-          tekton.dev/pipeline: oci-pipeline
+          tekton.dev/pipeline: tripvibe-ui-pipeline
       spec:
         serviceAccountName: pipeline
         pipelineRef:
-          name: oci-pipeline
+          name: tripvibe-ui-pipeline
         params:
           - name: APPLICATION_NAME
             value: '$(params.git-repo-name)'
