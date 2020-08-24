@@ -89,7 +89,7 @@ spec:
           value:
             - "$(params.APPLICATION_NAME)/cicd/applications"
       runAfter:
-        - maven-run
+        - fetch-cicd-repository
 
     - name: oc-start-build
       taskRef:
