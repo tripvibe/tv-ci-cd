@@ -12,7 +12,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: sc-routes:latest
+      name: tripvibe:latest
   postCommit: {}
   runPolicy: "Parallel"
   resources: {}
