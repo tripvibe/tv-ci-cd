@@ -10,5 +10,6 @@ resources:
 - build-image-tv-streams-route-5.yaml
 - build-image-tv-streams-trip-1.yaml
 - build-image-tv-streams-trip-5.yaml
+- build-image-tripvibe.yaml
 - s3-deploy.yaml
 - kafka-deploy.yaml

@@ -9,3 +9,4 @@ bases:
 - tv-streams/overlays/cicd
 - tv-streams/overlays/development
 - tv-streams/overlays/test
+- tripvibe/manifests

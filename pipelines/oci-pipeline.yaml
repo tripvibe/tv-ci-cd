@@ -1,11 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: maven-pipeline
+  name: oci-pipeline
 spec:
   workspaces:
     - name: shared-workspace
-    - name: maven-settings
     - name: argocd-env-secret
   params:
   - name: APPLICATION_NAME
@@ -26,12 +25,6 @@ spec:
   - name: GIT_BRANCH
     type: string
     default: "master"
-  - name: MAVEN_MIRROR_URL
-    type: string
-    default: "http://repo1.maven.org/maven2"
-  - name: MAVEN_OPTS
-    type: string
-    default: ""
   - name: BUILD_NAMESPACE
     type: string
     default: "labs-ci-cd"
@@ -82,27 +75,6 @@ spec:
           value: "true"
       runAfter:
         - fetch-app-repository
-
-    - name: maven-run
-      taskRef:
-        name: maven
-      params:
-        - name: MAVEN_MIRROR_URL
-          value: "$(params.MAVEN_MIRROR_URL)"
-        - name: MAVEN_OPTS
-          value: "$(params.MAVEN_OPTS)"
-        - name: WORK_DIRECTORY
-          value: "$(params.APPLICATION_NAME)/$(params.GIT_REF)"
-        - name: GOALS
-          value:
-            - "package"
-      runAfter:
-        - fetch-cicd-repository
-      workspaces:
-        - name: maven-settings
-          workspace: maven-settings
-        - name: output
-          workspace: shared-workspace
 
     - name: kustomize-build-config
       taskRef:
