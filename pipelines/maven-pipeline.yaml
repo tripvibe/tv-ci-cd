@@ -115,7 +115,7 @@ spec:
           value: "kustomize build $1 | oc apply -f-"
         - name: ARGS
           value:
-            - "$(params.APPLICATION_NAME)/cicd/applications"
+            - "$(params.APPLICATION_NAME)/cicd/applications/build"
       runAfter:
         - maven-run
 
