@@ -51,6 +51,7 @@ ignore_differences: &ignore_differences
     kind: DeploymentConfig
     jsonPointers:
     - /spec/template/spec/containers/0/image
+    - /spec/template/spec/replicas
     - /spec/triggers/0/imageChangeParams/lastTriggeredImage
     - /spec/triggers/1/imageChangeParams/lastTriggeredImage
 ##############

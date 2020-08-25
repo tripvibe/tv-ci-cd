@@ -271,6 +271,7 @@ spec:
         - helm-argocd-apps-master
 
     - name: argocd-sync-application-branches
+      retries: 3
       taskRef:
         name: argocd-sync-and-wait
       workspaces:
@@ -287,6 +288,7 @@ spec:
       - helm-argocd-apps-branches
 
     - name: argocd-sync-application-master
+      retries: 3
       taskRef:
         name: argocd-sync-and-wait
       workspaces:
