@@ -77,3 +77,20 @@ oc get route webhook -o custom-columns=ROUTE:.spec.host --no-headers
   - branches, pr's - deployed to development namespace only
   - master - deployed to development and test namespaces
   - git commit short and long ref used for images taggging and argocd sync
+
+Directory structure:
+
+```
+├── applications                    <--->  application deployments (helm,kustomize,argocd app-or-apps pattern)
+├── conditionals                    <--->  pipeline logic conditionals
+├── kustomization.yaml              <--->  top level kustomize target to apply to cicd namespace
+├── operators                       <--->  any middleware infra that requires privilege including operators
+├── persistent-volume-claims        <--->  pipeline PVC definitions
+├── pipelines                       <--->  pipeline definitions
+├── rolebindings                    <--->  pipeline rbac
+├── secrets                         <--->  secrets for cicd and apps
+├── tasks                           <--->  pipeline tasks
+├── templates                       <--->  manual templates to trigger pipelines if no webhooks deployed
+├── triggers                        <--->  pipeline webhook triggers
+└── ubiquitous-journey              <--->  UJ to bootstrap argocd and cicd tooling
+```
