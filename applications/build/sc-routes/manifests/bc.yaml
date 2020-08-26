@@ -20,7 +20,7 @@ spec:
     binary: {}
     type: Binary
   strategy:
-    dockerStrategy: {dockerfilePath: Dockerfile.jvm}
+    dockerStrategy: {dockerfilePath: Dockerfile.native}
     type: Docker
   triggers:
   - github:
