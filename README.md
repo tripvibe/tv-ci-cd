@@ -48,6 +48,7 @@ oc process kafka-deploy | oc -n labs-ci-cd create -f-
 
 Start an Application pipeline build manually
 ```bash
+oc -n labs-ci-cd process build-image-sc-routes | oc -n labs-ci-cd create -f-
 oc -n labs-ci-cd process build-image-tv-data-lake | oc -n labs-ci-cd create -f-
 oc -n labs-ci-cd process build-image-tv-submit | oc -n labs-ci-cd create -f-
 oc -n labs-ci-cd process build-image-tv-query | oc -n labs-ci-cd create -f-
