@@ -28,6 +28,10 @@ spec:
       description: Override any java options
       type: string
       default: ""
+    - name: MAVEN_BUILD_OPTS
+      description: maven build options
+      type: array
+      default:
     - name: MAVEN_MIRROR_URL
       description: The Maven repository mirror url
       type: string
@@ -119,8 +123,9 @@ spec:
     - name: mvn-goals
       image: $(params.MAVEN_IMAGE)
       workingDir: $(workspaces.output.path)/$(params.WORK_DIRECTORY)
-      command: ["/usr/bin/mvn", "$(params.MAVEN_OPTS)"]
+      command: ["/usr/bin/mvn"]
       args:
         - -s
         - $(workspaces.maven-settings.path)/settings.xml
         - "$(params.GOALS)"
+        - "$(params.MAVEN_BUILD_OPTS)"

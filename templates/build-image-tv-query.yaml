@@ -36,8 +36,6 @@ objects:
       value: "master"
     - name: MAVEN_MIRROR_URL
       value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
-    - name: MAVEN_OPTS
-      value: "-DskipTests" # fixme run tests
     - name: BUILD_NAMESPACE
       value: "labs-ci-cd"
     - name: DEV_NAMESPACE
@@ -48,3 +46,6 @@ objects:
       value: "tv_query_dev"
     - name: APP_OF_APPS_TEST_KEY
       value: "tv_query_test"
+    - name: MAVEN_BUILD_OPTS # fixme run tests
+      value:
+        - -DskipTests

@@ -45,8 +45,6 @@ spec:
             value: '$(params.git-branch)'
           - name: MAVEN_MIRROR_URL
             value: http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/maven-public
-          - name: MAVEN_OPTS
-            value: "-DskipTests" # fixme run tests
           - name: BUILD_NAMESPACE
             value: "labs-ci-cd"
           - name: DEV_NAMESPACE
@@ -57,6 +55,10 @@ spec:
             value: "tv_streams_trip_5_dev"
           - name: APP_OF_APPS_TEST_KEY # !! fixme mike - this whole trigger template can be removed when string.replace() works in CEL listener image - hopefully 1.1.0. we are doing this here cause its the only place we can do it !!
             value: "tv_streams_trip_5_test"
+          - name: MAVEN_BUILD_OPTS # fixme run tests
+            value:
+              - -DskipTests
+              - -Pnative
         workspaces:
         - name: shared-workspace
           persistentVolumeClaim:

@@ -32,6 +32,10 @@ spec:
   - name: MAVEN_OPTS
     type: string
     default: ""
+  - name: MAVEN_BUILD_OPTS
+    description: maven build options
+    type: array
+    default: []
   - name: BUILD_NAMESPACE
     type: string
     default: "labs-ci-cd"
@@ -96,6 +100,9 @@ spec:
         - name: GOALS
           value:
             - "package"
+        - name: MAVEN_BUILD_OPTS
+          value:
+            - "$(params.MAVEN_BUILD_OPTS)"
       runAfter:
         - fetch-cicd-repository
       workspaces:
