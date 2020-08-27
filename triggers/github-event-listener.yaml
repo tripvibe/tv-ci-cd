@@ -13,7 +13,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-data-lake')
+              body.repository.full_name == 'tripvibe/tv-data-lake')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -29,7 +29,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.pull_request.head.repo.full_name == 'eformat/tv-data-lake'
+              body.pull_request.head.repo.full_name == 'tripvibe/tv-data-lake'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -47,7 +47,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-submit')
+              body.repository.full_name == 'tripvibe/tv-submit')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -63,7 +63,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-submit'
+              body.repository.full_name == 'tripvibe/tv-submit'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -81,7 +81,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-query')
+              body.repository.full_name == 'tripvibe/tv-query')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -97,7 +97,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-query'
+              body.repository.full_name == 'tripvibe/tv-query'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -115,7 +115,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/sc-routes')
+              body.repository.full_name == 'tripvibe/sc-routes')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -131,7 +131,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/sc-routes'
+              body.repository.full_name == 'tripvibe/sc-routes'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -149,7 +149,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-streams')
+              body.repository.full_name == 'tripvibe/tv-streams')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -165,7 +165,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-streams'
+              body.repository.full_name == 'tripvibe/tv-streams'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -183,7 +183,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-streams')
+              body.repository.full_name == 'tripvibe/tv-streams')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -199,7 +199,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-streams'
+              body.repository.full_name == 'tripvibe/tv-streams'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -217,7 +217,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-streams')
+              body.repository.full_name == 'tripvibe/tv-streams')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -233,7 +233,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-streams'
+              body.repository.full_name == 'tripvibe/tv-streams'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -251,7 +251,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tv-streams')
+              body.repository.full_name == 'tripvibe/tv-streams')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -267,7 +267,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tv-streams'
+              body.repository.full_name == 'tripvibe/tv-streams'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
@@ -285,7 +285,7 @@ spec:
       - cel:
           filter: >-
             (header.match('X-GitHub-Event', 'push') &&
-              body.repository.full_name == 'eformat/tripvibe')
+              body.repository.full_name == 'tripvibe/tripvibe')
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.head_commit.id, 7)'
@@ -301,7 +301,7 @@ spec:
           filter: >-
             (header.match('X-GitHub-Event', 'pull_request') &&
               body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-              body.repository.full_name == 'eformat/tripvibe'
+              body.repository.full_name == 'tripvibe/tripvibe'
           overlays:
           - key: extensions.truncated_sha
             expression: 'truncate(body.pull_request.head.sha, 7)'
