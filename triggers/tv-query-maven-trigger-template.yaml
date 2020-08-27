@@ -19,6 +19,8 @@ spec:
       description: The git branch name
     - name: git-short-revision
       description: Seven character git sha
+    - name: git-app-of-apps-key
+      description: App of Apps Key using lowercase
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -51,10 +53,10 @@ spec:
             value: "labs-dev"
           - name: TEST_NAMESPACE
             value: "labs-test"
-          - name: APP_OF_APPS_DEV_KEY # !! fixme mike - this whole trigger template can be removed when string.replace() works in CEL listener image - hopefully 1.1.0. we are doing this here cause its the only place we can do it !!
-            value: "tv_query_dev"
-          - name: APP_OF_APPS_TEST_KEY # !! fixme mike - this whole trigger template can be removed when string.replace() works in CEL listener image - hopefully 1.1.0. we are doing this here cause its the only place we can do it !!
-            value: "tv_query_test"
+          - name: APP_OF_APPS_DEV_KEY
+            value: "$(params.git-app-of-apps-key)_dev"
+          - name: APP_OF_APPS_TEST_KEY
+            value: "$(params.git-app-of-apps-key)_test"
           - name: MAVEN_BUILD_OPTS # fixme run tests
             value:
               - -DskipTests

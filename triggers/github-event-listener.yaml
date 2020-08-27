@@ -16,9 +16,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-data-lake')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -32,11 +34,13 @@ spec:
                 body.pull_request.head.repo.full_name == 'tripvibe/tv-data-lake'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -50,9 +54,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-submit')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
         - ref: github-trigger-binding
       template:
@@ -66,11 +72,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-submit'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -84,9 +92,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-query')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -100,11 +110,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-query'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -118,9 +130,11 @@ spec:
                 body.repository.full_name == 'tripvibe/sc-routes')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -134,11 +148,13 @@ spec:
                 body.repository.full_name == 'tripvibe/sc-routes'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -152,9 +168,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -168,11 +186,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -186,9 +206,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -202,11 +224,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -220,9 +244,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -236,11 +262,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -254,9 +282,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -270,11 +300,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tv-streams'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
@@ -288,9 +320,11 @@ spec:
                 body.repository.full_name == 'tripvibe/tripvibe')
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.head_commit.id, 7)'
+              expression: "body.head_commit.id.substring(0,7)"
             - key: extensions.branch_name
-              expression: "split(body.ref,'/')[2]"
+              expression: "body.ref.split('/')[2]"
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding
       template:
@@ -304,11 +338,13 @@ spec:
                 body.repository.full_name == 'tripvibe/tripvibe'
             overlays:
             - key: extensions.truncated_sha
-              expression: 'truncate(body.pull_request.head.sha, 7)'
+              expression: "body.pull_request.head.sha.substring(0,7)"
             - key: extensions.branch_name
               expression: body.pull_request.head.ref
             - key: extensions.pr
               expression: body.pull_request.number
+            - key: extensions.app_of_apps_key
+              expression: "body.repository.name.replace('-','_',-1)"
       bindings:
       - ref: github-trigger-binding-pr
       template:
