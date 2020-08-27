@@ -58,7 +58,6 @@ spec:
           - name: MAVEN_BUILD_OPTS # fixme run tests
             value:
               - -DskipTests
-              - -Pnative
         workspaces:
         - name: shared-workspace
           persistentVolumeClaim:
