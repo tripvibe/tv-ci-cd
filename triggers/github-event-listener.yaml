@@ -8,311 +8,311 @@ metadata:
 spec:
   serviceAccountName: pipeline
   triggers: # fixme - ideally we only have two triggers, on for master, one for branches, pr  
-  - name: tv-data-lake-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-data-lake')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-data-lake-maven-trigger-template
-  - name: tv-data-lake-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.pull_request.head.repo.full_name == 'tripvibe/tv-data-lake'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-data-lake-maven-trigger-template
+    - name: tv-data-lake-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-data-lake')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-data-lake-maven-trigger-template
+    - name: tv-data-lake-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.pull_request.head.repo.full_name == 'tripvibe/tv-data-lake'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-data-lake-maven-trigger-template
 
-  - name: tv-submit-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-submit')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-submit-maven-trigger-template
-  - name: tv-submit-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-submit'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-submit-maven-trigger-template
+    - name: tv-submit-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-submit')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+        - ref: github-trigger-binding
+      template:
+        name: tv-submit-maven-trigger-template
+    - name: tv-submit-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-submit'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-submit-maven-trigger-template
 
-  - name: tv-query-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-query')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-query-maven-trigger-template
-  - name: tv-query-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-query'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-query-maven-trigger-template
+    - name: tv-query-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-query')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-query-maven-trigger-template
+    - name: tv-query-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-query'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-query-maven-trigger-template
 
-  - name: sc-routes-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/sc-routes')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: sc-routes-maven-trigger-template
-  - name: sc-routes-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/sc-routes'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: sc-routes-maven-trigger-template
+    - name: sc-routes-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/sc-routes')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: sc-routes-maven-trigger-template
+    - name: sc-routes-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/sc-routes'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: sc-routes-maven-trigger-template
 
-  - name: tv-streams-route-1-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-streams')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-streams-route-1-maven-trigger-template
-  - name: tv-streams-route-1-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-streams'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-streams-route-1-maven-trigger-template
+    - name: tv-streams-route-1-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-streams')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-streams-route-1-maven-trigger-template
+    - name: tv-streams-route-1-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-streams'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-streams-route-1-maven-trigger-template
 
-  - name: tv-streams-route-5-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-streams')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-streams-route-5-maven-trigger-template
-  - name: tv-streams-route-5-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-streams'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-streams-route-5-maven-trigger-template
+    - name: tv-streams-route-5-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-streams')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-streams-route-5-maven-trigger-template
+    - name: tv-streams-route-5-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-streams'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-streams-route-5-maven-trigger-template
 
-  - name: tv-streams-trip-1-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-streams')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-streams-trip-1-maven-trigger-template
-  - name: tv-streams-trip-1-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-streams'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-streams-trip-1-maven-trigger-template
+    - name: tv-streams-trip-1-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-streams')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-streams-trip-1-maven-trigger-template
+    - name: tv-streams-trip-1-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-streams'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-streams-trip-1-maven-trigger-template
 
-  - name: tv-streams-trip-5-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tv-streams')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tv-streams-trip-5-maven-trigger-template
-  - name: tv-streams-trip-5-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tv-streams'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tv-streams-trip-5-maven-trigger-template
+    - name: tv-streams-trip-5-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tv-streams')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tv-streams-trip-5-maven-trigger-template
+    - name: tv-streams-trip-5-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tv-streams'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tv-streams-trip-5-maven-trigger-template
 
-  - name: tripvibe-webhook-all-branches
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'push') &&
-            body.repository.full_name == 'tripvibe/tripvibe')
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.head_commit.id, 7)'
-        - key: extensions.branch_name
-          expression: "split(body.ref,'/')[2]"
-    bindings:
-      - name: github-trigger-binding
-    template:
-      name: tripvibe-trigger-template
-  - name: tripvibe-webhook-pr
-    interceptors: # fixme add secret.ref
-    - cel:
-        filter: >-
-          (header.match('X-GitHub-Event', 'pull_request') &&
-            body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
-            body.repository.full_name == 'tripvibe/tripvibe'
-        overlays:
-        - key: extensions.truncated_sha
-          expression: 'truncate(body.pull_request.head.sha, 7)'
-        - key: extensions.branch_name
-          expression: body.pull_request.head.ref
-        - key: extensions.pr
-          expression: body.pull_request.number
-    bindings:
-      - name: github-trigger-binding-pr
-    template:
-      name: tripvibe-trigger-template
+    - name: tripvibe-webhook-all-branches
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'push') &&
+                body.repository.full_name == 'tripvibe/tripvibe')
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.head_commit.id, 7)'
+            - key: extensions.branch_name
+              expression: "split(body.ref,'/')[2]"
+      bindings:
+      - ref: github-trigger-binding
+      template:
+        name: tripvibe-trigger-template
+    - name: tripvibe-webhook-pr
+      interceptors: # fixme add secret.ref
+        - cel:
+            filter: >-
+              (header.match('X-GitHub-Event', 'pull_request') &&
+                body.action == 'opened' || body.action == 'reopened' || body.action == 'synchronize') &&
+                body.repository.full_name == 'tripvibe/tripvibe'
+            overlays:
+            - key: extensions.truncated_sha
+              expression: 'truncate(body.pull_request.head.sha, 7)'
+            - key: extensions.branch_name
+              expression: body.pull_request.head.ref
+            - key: extensions.pr
+              expression: body.pull_request.number
+      bindings:
+      - ref: github-trigger-binding-pr
+      template:
+        name: tripvibe-trigger-template
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
