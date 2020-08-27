@@ -22,7 +22,7 @@ objects:
     - name: APPLICATION_NAME
       value: tripvibe
     - name: GIT_URL
-      value: https://github.com/eformat/tripvibe.git
+      value: https://github.com/tripvibe/tripvibe.git
     - name: GIT_REVISION
       value: master # or git tag, revision
     - name: GIT_REF

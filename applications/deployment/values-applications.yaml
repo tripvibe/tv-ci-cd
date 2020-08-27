@@ -66,7 +66,7 @@ applications:
   tv_data_lake_dev:
     name: tv-data-lake-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-data-lake.git
+    source: https://github.com/tripvibe/tv-data-lake.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -79,7 +79,7 @@ applications:
   tv_data_lake_test:
     name: tv-data-lake-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-data-lake.git
+    source: https://github.com/tripvibe/tv-data-lake.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -92,7 +92,7 @@ applications:
   tv_submit_dev:
     name: tv-submit-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-submit.git
+    source: https://github.com/tripvibe/tv-submit.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -105,7 +105,7 @@ applications:
   tv_submit_test:
     name: tv-submit-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-submit.git
+    source: https://github.com/tripvibe/tv-submit.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -118,7 +118,7 @@ applications:
   tv_query_dev:
     name: tv-query-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-query.git
+    source: https://github.com/tripvibe/tv-query.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -131,7 +131,7 @@ applications:
   tv_query_test:
     name: tv-query-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-query.git
+    source: https://github.com/tripvibe/tv-query.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -144,7 +144,7 @@ applications:
   sc_routes_dev:
     name: sc-routes-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/sc-routes.git
+    source: https://github.com/tripvibe/sc-routes.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -157,7 +157,7 @@ applications:
   sc_routes_test:
     name: sc-routes-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/sc-routes.git
+    source: https://github.com/tripvibe/sc-routes.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -170,7 +170,7 @@ applications:
   tv_streams_route_1_dev:
     name: tv-streams-route-1-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -183,7 +183,7 @@ applications:
   tv_streams_route_1_test:
     name: tv-streams-route-1-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -196,7 +196,7 @@ applications:
   tv_streams_route_5_dev:
     name: tv-streams-route-5-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -209,7 +209,7 @@ applications:
   tv_streams_route_5_test:
     name: tv-streams-route-5-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -222,7 +222,7 @@ applications:
   tv_streams_trip_1_dev:
     name: tv-streams-trip-1-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -235,7 +235,7 @@ applications:
   tv_streams_trip_1_test:
     name: tv-streams-trip-1-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -248,7 +248,7 @@ applications:
   tv_streams_trip_5_dev:
     name: tv-streams-trip-5-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -261,7 +261,7 @@ applications:
   tv_streams_trip_5_test:
     name: tv-streams-trip-5-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tv-streams.git
+    source: https://github.com/tripvibe/tv-streams.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test
@@ -274,7 +274,7 @@ applications:
   tripvibe_dev:
     name: tripvibe-dev
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tripvibe.git
+    source: https://github.com/tripvibe/tripvibe.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-dev
@@ -287,7 +287,7 @@ applications:
   tripvibe_test:
     name: tripvibe-test
     enabled: false # overridden by pipeline
-    source: https://github.com/eformat/tripvibe.git
+    source: https://github.com/tripvibe/tripvibe.git
     source_path: chart
     sync_policy_automated: true
     destination: labs-test

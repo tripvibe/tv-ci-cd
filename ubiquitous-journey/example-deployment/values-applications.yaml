@@ -45,7 +45,7 @@ applications:
   ignore_differences: *ignore_differences
 - name: pet-battle-api
   enabled: true
-  source: https://github.com/eformat/pet-battle-api.git
+  source: https://github.com/tripvibe/pet-battle-api.git
   source_path: chart
   sync_policy_automated: true
   destination: *test_ns

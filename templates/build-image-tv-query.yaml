@@ -25,7 +25,7 @@ objects:
     - name: APPLICATION_NAME
       value: tv-query
     - name: GIT_URL
-      value: https://github.com/eformat/tv-query.git
+      value: https://github.com/tripvibe/tv-query.git
     - name: GIT_REVISION
       value: master # or git tag, revision
     - name: GIT_REF
