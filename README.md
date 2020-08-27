@@ -19,6 +19,8 @@ Prerequisite deployments as cluster admin (wip - this should become more gitops)
 ```bash
 # cluster operators and privileged apps
 kustomize build operators | oc apply -f-
+# or
+oc apply -k "github.com/tripvibe/tv-ci-cd/operators?ref=master"
 ```
 
 Prerequisite Secrets (wip - this should become more gitops)
@@ -34,9 +36,10 @@ oc delete pod -n kube-system -l name=sealed-secrets-controller
 
 Seed CI - Deploy tripvibe Tekton resources (wip - this will move to its own seed pipeline)
 ```bash
-cd ../
-oc project labs-ci-cd
+cd ../ && oc project labs-ci-cd
 kustomize build | oc apply -f-
+# or
+oc apply -k "github.com/tripvibe/tv-ci-cd/?ref=master"
 ```
 
 Prerequisite for applications - run middleware pipelines manually (wip - these should become gitops)
