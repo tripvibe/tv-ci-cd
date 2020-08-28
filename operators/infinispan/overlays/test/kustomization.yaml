@@ -8,6 +8,4 @@ bases:
 
 resources:
 - infinispan-cr.yaml
-
-patchesStrategicMerge:
 - infinispan-operatorgroup.yaml

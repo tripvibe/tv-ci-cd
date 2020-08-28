@@ -103,7 +103,6 @@ spec:
             - sonar:sonar
         - name: MAVEN_BUILD_OPTS
           value:
-            - '-DskipTests' # just skip test - we dont want to build native or other options here
             - '-Dsonar.host.url=http://sonarqube-sonarqube:9000'
             - '-Dsonar.userHome=/tmp/sonar'
       runAfter:

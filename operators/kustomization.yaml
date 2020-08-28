@@ -7,5 +7,6 @@ bases:
 - sealed-secrets
 - infinispan/overlays/development
 - infinispan/overlays/test
+- infinispan/overlays/cicd
 - materialize/overlays/development
 - materialize/overlays/test

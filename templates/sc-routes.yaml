@@ -48,5 +48,4 @@ objects:
       value: "sc_routes_test"
     - name: MAVEN_BUILD_OPTS # fixme run tests
       value:
-        - -DskipTests
         - -Pnative

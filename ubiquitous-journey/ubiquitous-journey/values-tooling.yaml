@@ -227,6 +227,7 @@ sonarqube_values: &sonarqube_values
     install:
       - https://github.com/checkstyle/sonar-checkstyle/releases/download/8.35/checkstyle-sonar-plugin-8.35.jar
       - https://repo1.maven.org/maven2/org/sonarsource/java/sonar-java-plugin/6.3.2.22818/sonar-java-plugin-6.3.2.22818.jar
+      - https://github.com/SonarSource/sonar-jacoco/releases/download/1.1.0.898/sonar-jacoco-plugin-1.1.0.898.jar
 
 ##############
 # 🐙 Argo Ignore Differences

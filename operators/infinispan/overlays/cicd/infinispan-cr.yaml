@@ -1,0 +1,11 @@
+apiVersion: infinispan.org/v1
+kind: Infinispan
+metadata:
+  name: infinispan
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  container:
+    cpu: '0.5'
+    memory: 1024Mi
+  replicas: 1
