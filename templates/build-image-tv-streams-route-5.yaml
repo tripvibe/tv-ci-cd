@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: build-image-tv-streams-route-5
+  name: tv-streams-route-5
 objects:
 - apiVersion: tekton.dev/v1beta1
   kind: PipelineRun
   metadata:
-    generateName: build-image-tv-streams-route-5-
+    generateName: tv-streams-route-5-
   spec:
     pipelineRef:
       name: maven-pipeline

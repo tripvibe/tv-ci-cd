@@ -2,14 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- build-image-tv-data-lake.yaml
-- build-image-tv-submit.yaml
-- build-image-tv-query.yaml
-- build-image-sc-routes.yaml
-- build-image-tv-streams-route-1.yaml
-- build-image-tv-streams-route-5.yaml
-- build-image-tv-streams-trip-1.yaml
-- build-image-tv-streams-trip-5.yaml
-- build-image-tripvibe.yaml
+- tv-data-lake.yaml
+- tv-submit.yaml
+- tv-query.yaml
+- sc-routes.yaml
+- tv-streams-route-1.yaml
+- tv-streams-route-5.yaml
+- tv-streams-trip-1.yaml
+- tv-streams-trip-5.yaml
+- tripvibe.yaml
 - s3-deploy.yaml
 - kafka-deploy.yaml

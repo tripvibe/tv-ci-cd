@@ -25,7 +25,7 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: 'build-image-maven-$(params.git-repo-name)-'
+        generateName: 'maven-$(params.git-repo-name)-'
         labels:
           tekton.dev/pipeline: maven-pipeline
       spec:

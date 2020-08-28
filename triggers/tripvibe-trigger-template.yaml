@@ -25,7 +25,7 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: 'build-image-$(params.git-repo-name)-'
+        generateName: '$(params.git-repo-name)-'
         labels:
           tekton.dev/pipeline: tripvibe-ui-pipeline
       spec:
