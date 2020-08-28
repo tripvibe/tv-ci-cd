@@ -54,9 +54,9 @@ spec:
           - name: TEST_NAMESPACE
             value: "labs-test"
           - name: APP_OF_APPS_DEV_KEY
-            value: "$(params.git-app-of-apps-key)_dev"
+            value: "tv_streams_trip_1_dev"
           - name: APP_OF_APPS_TEST_KEY
-            value: "$(params.git-app-of-apps-key)_test"
+            value: "tv_streams_trip_1_test"
           - name: MAVEN_BUILD_OPTS # fixme run tests
             value:
               - -DskipTests
