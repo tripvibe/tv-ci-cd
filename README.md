@@ -17,6 +17,7 @@ helm template -f ubiquitous-journey/values-tooling.yaml ubiquitous-journey/ | oc
 
 Prerequisite deployments as cluster admin (wip - this should become more gitops)
 ```bash
+cd ../
 # cluster operators and privileged apps
 kustomize build operators | oc apply -f-
 # or
@@ -30,8 +31,23 @@ ansible-vault decrypt secrets/sealed-secret-master.key --vault-password-file=~/.
 # edit secret name
 pod=$(oc -n kube-system get secret -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o name)
 sed -i -e "s|name:.*|name: ${pod##secret/}|" secrets/sealed-secret-master.key
+oc replace -f secrets/sealed-secret-master.key
 # restart sealedsecret controller pod
 oc delete pod -n kube-system -l name=sealed-secrets-controller
+# generate argocd token
+oc edit cm argocd-cm
+
+data:
+  accounts.admin: apiKey
+
+HOST=$(oc get route argocd-server --template='{{ .spec.host }}')
+argocd login $HOST:443 --sso --insecure --username admin
+argocd account generate-token --account admin
+# regen secrets for new deployment
+export DEVID=<your ptv devid>
+export APIKEY=<your ptv apikey>
+export ARGOCD_TOKEN=<your argocd token>
+./regen-sealed-secret.sh
 ```
 
 Seed CI - Deploy tripvibe Tekton resources (wip - this will move to its own seed pipeline)

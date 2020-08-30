@@ -24,7 +24,7 @@ ansible-vault decrypt secrets/sealed-secret-master.key --vault-password-file=~/.
 # edit secret name
 pod=$(oc -n kube-system get secret -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o name)
 sed -i -e "s|name:.*|name: ${pod##secret/}|" secrets/sealed-secret-master.key
-oc replace -f ~/secrets/sealed-secret-master.key
+oc replace -f secrets/sealed-secret-master.key
 # restart sealedsecret controller pod
 oc delete pod -n kube-system -l name=sealed-secrets-controller
 ```
@@ -44,4 +44,11 @@ cd ~/tv-ci-cd/secrets
 kubeseal < argocd-env-secret.yaml > argocd-env-secret-sealedsecret.yaml
 oc delete secret argocd-env
 oc apply -f argocd-env-secret-sealedsecret.yaml
+```
+
+Regen all secrets for new deployment
+```
+export DEVID=<your ptv devid>
+export APIKEY=<your ptv apikey>
+./regen-sealed-secret.sh
 ```
