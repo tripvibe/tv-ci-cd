@@ -123,7 +123,7 @@ spec:
           workspace: shared-workspace
       params:
         - name: SCRIPT
-          value: "sleep 10 && oc -n $1 wait pod/tv-cluster-kafka-{0..2} --for=condition=Ready --timeout=300s"
+          value: "sleep 30 && oc -n $1 wait pod/tv-cluster-kafka-{0..2} --for=condition=Ready --timeout=300s"
         - name: ARGS
           value:
             - "$(params.TEST_NAMESPACE)"

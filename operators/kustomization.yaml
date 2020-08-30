@@ -3,7 +3,7 @@ kind: Kustomization
 
 bases:
 - strimzi
-- tekton
+#- tekton
 - sealed-secrets
 - infinispan/overlays/development
 - infinispan/overlays/test
