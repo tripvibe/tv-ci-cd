@@ -156,7 +156,7 @@ applications:
     values: *routes_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   sc_routes_test:
     name: sc-routes-test
