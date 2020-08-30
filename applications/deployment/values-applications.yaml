@@ -151,7 +151,7 @@ applications:
     source: https://github.com/tripvibe/sc-routes.git
     source_path: chart
     sync_policy_automated: true
-    destination: labs-dev-dev
+    destination: labs-dev
     source_ref: master # overridden by git revision in pipeline trigger
     values: *routes_values
     ignore_differences: *ignore_differences
