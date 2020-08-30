@@ -37,9 +37,10 @@ tripvibe_values: &tripvibe_values
   fullnameOverride: tripvibe # important to use this if want same app name in multiple ns, else release.name used in chart
   image_repository: image-registry.openshift-image-registry.svc:5000
   image_name: tripvibe
-allowed_destinations: &allowed_destinations # argocd project
+dev_allowed_destinations: &dev_allowed_destinations # argocd project
   - namespace: labs-dev
     server: https://kubernetes.default.svc
+test_allowed_destinations: &test_allowed_destinations # argocd project
   - namespace: labs-test
     server: https://kubernetes.default.svc
 ##############
@@ -59,8 +60,11 @@ ignore_differences: &ignore_differences
 #############
 argocd_projects:
 - enabled: true
-  name: tripvibe
-  destinations: *allowed_destinations
+  name: tripvibe-dev
+  destinations: *dev_allowed_destinations
+- enabled: true
+  name: tripvibe-test
+  destinations: *test_allowed_destinations
 
 applications:
   tv_data_lake_dev:
@@ -74,7 +78,7 @@ applications:
     values: *data_lake_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_data_lake_test:
     name: tv-data-lake-test
@@ -87,7 +91,7 @@ applications:
     values: *data_lake_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_submit_dev:
     name: tv-submit-dev
@@ -100,7 +104,7 @@ applications:
     values: *submit_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_submit_test:
     name: tv-submit-test
@@ -113,7 +117,7 @@ applications:
     values: *submit_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_query_dev:
     name: tv-query-dev
@@ -126,7 +130,7 @@ applications:
     values: *query_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_query_test:
     name: tv-query-test
@@ -139,7 +143,7 @@ applications:
     values: *query_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   sc_routes_dev:
     name: sc-routes-dev
@@ -147,7 +151,7 @@ applications:
     source: https://github.com/tripvibe/sc-routes.git
     source_path: chart
     sync_policy_automated: true
-    destination: labs-dev
+    destination: labs-dev-dev
     source_ref: master # overridden by git revision in pipeline trigger
     values: *routes_values
     ignore_differences: *ignore_differences
@@ -165,7 +169,7 @@ applications:
     values: *routes_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_streams_route_1_dev:
     name: tv-streams-route-1-dev
@@ -178,7 +182,7 @@ applications:
     values: *streams_route_1_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_streams_route_1_test:
     name: tv-streams-route-1-test
@@ -191,7 +195,7 @@ applications:
     values: *streams_route_1_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_streams_route_5_dev:
     name: tv-streams-route-5-dev
@@ -204,7 +208,7 @@ applications:
     values: *streams_route_5_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_streams_route_5_test:
     name: tv-streams-route-5-test
@@ -217,7 +221,7 @@ applications:
     values: *streams_route_5_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_streams_trip_1_dev:
     name: tv-streams-trip-1-dev
@@ -230,7 +234,7 @@ applications:
     values: *streams_trip_1_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_streams_trip_1_test:
     name: tv-streams-trip-1-test
@@ -243,7 +247,7 @@ applications:
     values: *streams_trip_1_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tv_streams_trip_5_dev:
     name: tv-streams-trip-5-dev
@@ -256,7 +260,7 @@ applications:
     values: *streams_trip_5_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tv_streams_trip_5_test:
     name: tv-streams-trip-5-test
@@ -269,7 +273,7 @@ applications:
     values: *streams_trip_5_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
   tripvibe_dev:
     name: tripvibe-dev
@@ -282,7 +286,7 @@ applications:
     values: *tripvibe_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-dev
       enabled: true
   tripvibe_test:
     name: tripvibe-test
@@ -295,5 +299,5 @@ applications:
     values: *tripvibe_values
     ignore_differences: *ignore_differences
     project:
-      name: tripvibe
+      name: tripvibe-test
       enabled: true
