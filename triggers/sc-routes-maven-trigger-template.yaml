@@ -57,9 +57,8 @@ spec:
             value: "$(params.git-app-of-apps-key)_dev"
           - name: APP_OF_APPS_TEST_KEY
             value: "$(params.git-app-of-apps-key)_test"
-          - name: MAVEN_BUILD_OPTS # fixme run tests
+          - name: MAVEN_BUILD_OPTS
             value:
-              - -DskipTests
               - -Pnative
         workspaces:
         - name: shared-workspace
