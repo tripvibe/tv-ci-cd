@@ -13,3 +13,4 @@ resources:
 - tripvibe.yaml
 - s3-deploy.yaml
 - kafka-deploy.yaml
+- sc-routes-create-webhook.yaml
