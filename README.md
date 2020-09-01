@@ -78,6 +78,16 @@ oc -n labs-ci-cd process tv-streams-trip-5 | oc -n labs-ci-cd create -f-
 oc -n labs-ci-cd process tripvibe | oc -n labs-ci-cd create -f-
 ```
 
+Create webhooks in github repos manually (TaskRuns)
+```bash
+oc process sc-routes-create-webhook | oc -n labs-ci-cd create -f-
+oc process tv-query-create-webhook | oc -n labs-ci-cd create -f-
+oc process tripvibe-create-webhook | oc -n labs-ci-cd create -f-
+oc process tv-data-lake-create-webhook | oc -n labs-ci-cd create -f-
+oc process tv-streams-create-webhook | oc -n labs-ci-cd create -f-
+oc process tv-submit-create-webhook | oc -n labs-ci-cd create -f-
+```
+
 Else add json webhook in github repo pointing to this route to trigger pipeline (wip - automation to create webhooks)
 ```bash
 oc get route webhook -o custom-columns=ROUTE:.spec.host --no-headers
