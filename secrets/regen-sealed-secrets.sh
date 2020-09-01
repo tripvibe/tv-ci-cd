@@ -24,6 +24,7 @@ EOF
     oc get secret sc-routes -o yaml > sc-routes-secret-$project.yaml
     kubeseal < sc-routes-secret-$project.yaml > sc-routes-secret-$project-sealedsecret.yaml
     oc delete secret/sc-routes
+    oc apply -f sc-routes-secret-$project-sealedsecret.yaml
     rm -f sc-routes-secret-$project.yaml
 }
 
@@ -45,6 +46,7 @@ EOF
     oc get secret/argocd-env -o yaml > argocd-env-secret.yaml
     kubeseal < argocd-env-secret.yaml > argocd-env-secret-sealedsecret.yaml
     oc delete secret/argocd-env
+    oc apply -f argocd-env-secret-sealedsecret.yaml
     rm -f argocd-env-secret.yaml
 }
 
