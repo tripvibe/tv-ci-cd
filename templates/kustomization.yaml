@@ -14,3 +14,8 @@ resources:
 - s3-deploy.yaml
 - kafka-deploy.yaml
 - sc-routes-create-webhook.yaml
+- tv-query-create-webhook.yaml
+- tripvibe-create-webhook.yaml
+- tv-data-lake-create-webhook.yaml
+- tv-streams-create-webhook.yaml
+- tv-submit-create-webhook.yaml

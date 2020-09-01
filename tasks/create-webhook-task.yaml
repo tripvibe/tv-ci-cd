@@ -33,7 +33,7 @@ spec:
       set -e
       echo "Create Webhook"
       if [ $(inputs.params.GitHubDomain) = "github.com" ];then
-        curl -H "Accept: application/vnd.github.v3+json" -v -d "{\"name\": \"web\",\"active\": true,\"events\": $(inputs.params.WebhookEvents),\"config\": {\"url\": \"$(inputs.params.ExternalDomain)\",\"content_type\": \"json\",\"insecure_ssl\": \"1\" ,\"secret\": \"$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubSecretStringKey))\"}}" -u $(inputs.params.GitHubUser):$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubAccessTokenKey)) -L https://api.github.com/repos/$(inputs.params.GitHubOrg)/$(inputs.params.GitHubRepo)/hooks
+        curl -H "Accept: application/vnd.github.v3+json" -d "{\"name\": \"web\",\"active\": true,\"events\": $(inputs.params.WebhookEvents),\"config\": {\"url\": \"$(inputs.params.ExternalDomain)\",\"content_type\": \"json\",\"insecure_ssl\": \"1\" ,\"secret\": \"$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubSecretStringKey))\"}}" -u $(inputs.params.GitHubUser):$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubAccessTokenKey)) -L https://api.github.com/repos/$(inputs.params.GitHubOrg)/$(inputs.params.GitHubRepo)/hooks
       else
         curl -d "{\"name\": \"web\",\"active\": true,\"events\": $(inputs.params.WebhookEvents),\"config\": {\"url\": \"$(inputs.params.ExternalDomain)/\",\"content_type\": \"json\",\"insecure_ssl\": \"1\" ,\"secret\": \"$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubSecretStringKey))\"}}" -u $(inputs.params.GitHubUser):$(cat $(workspaces.git-auth-secret.path)/$(inputs.params.GitHubAccessTokenKey)) -L https://$(inputs.params.GitHubDomain)/api/v3/repos/$(inputs.params.GitHubOrg)/$(inputs.params.GitHubRepo)/hooks
       fi

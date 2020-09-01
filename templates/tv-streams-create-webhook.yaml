@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: tv-streams-create-webhook
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: TaskRun
+  metadata:
+    generateName: tv-streams-create-webhook-
+  spec:
+    taskRef:
+      kind: Task
+      name: create-webhook
+    params:
+    - name: GitHubOrg
+      value: "tripvibe"
+    - name: GitHubUser
+      value: "tekton"
+    - name: GitHubRepo
+      value: "tv-streams"
+    - name: GitHubAccessTokenKey
+      value: password
+    - name: GitHubSecretStringKey
+      value: webhook
+    - name: ExternalDomain
+      value: http://webhook-labs-ci-cd.apps.hivec.sandbox1604.opentlc.com
+    timeout: 1h0m0s
+    serviceAccountName: pipeline
+    workspaces:
+    - name: git-auth-secret
+      secret:
+        secretName: git-auth
