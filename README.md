@@ -35,6 +35,7 @@ oc replace -f secrets/sealed-secret-master.key
 # restart sealedsecret controller pod
 oc delete pod -n kube-system -l name=sealed-secrets-controller
 # generate argocd token
+oc project labs-ci-cd
 oc edit cm argocd-cm
 
 data:
@@ -47,7 +48,8 @@ argocd account generate-token --account admin
 export DEVID=<your ptv devid>
 export APIKEY=<your ptv apikey>
 export ARGOCD_TOKEN=<your argocd token>
-./regen-sealed-secret.sh
+cd secrets
+./regen-sealed-secrets.sh
 ```
 
 Seed CI - Deploy tripvibe Tekton resources (wip - this will move to its own seed pipeline)
