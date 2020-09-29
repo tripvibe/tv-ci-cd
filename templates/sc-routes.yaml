@@ -49,3 +49,4 @@ objects:
     - name: MAVEN_BUILD_OPTS # fixme run tests
       value:
         - -Pnative
+        - -Dquarkus.native.native-image-xmx=6g

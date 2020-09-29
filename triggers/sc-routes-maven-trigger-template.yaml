@@ -60,6 +60,7 @@ spec:
           - name: MAVEN_BUILD_OPTS
             value:
               - -Pnative
+              - -Dquarkus.native.native-image-xmx=6g
         workspaces:
         - name: shared-workspace
           persistentVolumeClaim:
